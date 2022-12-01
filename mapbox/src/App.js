@@ -10,6 +10,7 @@ export default function App() {
 
     const mapContainer = useRef(null);
     const map = useRef(null);
+    var marker = new mapboxgl.Marker();
     const [lng, setLng] = useState(-72.50187402113794);
     const [lat, setLat] = useState(42.37314021836991);
     const [zoom, setZoom] = useState(12);
@@ -24,12 +25,6 @@ export default function App() {
     });
     });
 
-    // useEffect(() => {
-    //     if (!map.current) return;
-
-        
-    // });
-
     useEffect(() => {
     if (!map.current) return; // wait for map to initialize
     map.current.on('move', () => {
@@ -40,6 +35,11 @@ export default function App() {
         console.log("latitude", lat);
         console.log("zoom", zoom);
     });
+
+    map.current.on('click', (event) => {
+        marker.setLngLat(event.lngLat).addTo(map.current);
+    });
+
     });
 
     return (
