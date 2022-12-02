@@ -1,0 +1,39 @@
+.inputView {
+    padding: 20px;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.formFields {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.label {
+    width: 150px;
+    margin-right: 10px;
+}
+
+.text-input {
+    max-width: 210px;
+    min-width: 210px;
+}
+
+.field {
+    max-width: 210px;
+    min-width: 210px;
+}
+
+.routeButton {
+    width: 150px;
+    margin: 20px 0 0 0;
+    height: 30px;
+    background-color: #364a54;
+    border: none;
+    color: #f2f8fb;
+}
