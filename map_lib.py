@@ -8,10 +8,9 @@ import pandas as pd
 class Map:
 
     def __init__(self) -> None:
-        
         self.url = "https://api.open-elevation.com/api/v1/lookup?locations={}"
+        pass
 
-    
     def generate_map(self,mapFilePath,source,dist):
         """
         # mapFilePath = path to the map file
@@ -45,10 +44,9 @@ class Map:
         for i in range(0, len(nodeLatLongDataframe),batch):
             locationLatLong = '|'.join(nodeLatLongDataframe.iloc[i: i + batch])
             url = self.url.format(locationLatLong)
-            ApiResponse = requests.get(url)
-            responseJSON = ApiResponse.json()
-
+            responseJSON = requests.get(url).json()
             results.extend(responseJSON['results'])
+
         elevationDict = {}
         nodeIds = list(point_dict.keys())
         for idx in range(len(nodeIds)):
@@ -62,6 +60,4 @@ class Map:
 
 # if __name__=="__main__":
 #     newMap = Map()
-#     mp = newMap.generate_map(None,(42.37444161675649, -72.51956880913377),2000)
-#     # print(list(mp.nodes(data = True))[:20])
-#     print()
+#     mp = newMap.generate_map(None,(42.37444161675649, -72.51956880913377),30000)
