@@ -63,9 +63,10 @@ const InputView = () => {
                     Max. Distance Limit
                 </div>
                 <input 
-                    type="text" 
+                    type="number" 
                     name="distanceLimit" 
                     className='field text-input'
+                    min="100"
                     value={inputs.distanceLimit || ""} 
                     onChange={handleChange}
                 />
