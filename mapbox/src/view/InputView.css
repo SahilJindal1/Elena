@@ -5,6 +5,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background-color: #4a788f;
+    color: #f2f8fb;
+    width: 25vw;
 }
 
 .formFields {
@@ -33,7 +36,7 @@
     width: 150px;
     margin: 20px 0 0 0;
     height: 30px;
-    background-color: #364a54;
+    background-color: rgba(35, 55, 75, 0.9);
     border: none;
     color: #f2f8fb;
 }
