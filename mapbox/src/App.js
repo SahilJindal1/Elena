@@ -9,7 +9,7 @@ export default function App() {
 
     const mapContainer = useRef(null);
     const map = useRef(null);
-    var marker = new mapboxgl.Marker();
+    //var marker = new mapboxgl.Marker();
     const [lng, setLng] = useState(-72.50187402113794);
     const [lat, setLat] = useState(42.37314021836991);
     const [zoom, setZoom] = useState(12);
@@ -38,8 +38,11 @@ export default function App() {
         }
     });
 
-    var srcMarker = new mapboxgl.Marker();
-    var destMarker = new mapboxgl.Marker();
+    var srcMarker = new mapboxgl.Marker({color: "#005db2"});
+    srcMarker.setLngLat([-72.5018, 42.3731]);
+
+    var destMarker = new mapboxgl.Marker({color: "#dc143c"});
+    destMarker.setLngLat([-72.5018, 42.3731]);
 
     useEffect(() => {
     if (map.current) return; // initialize map only once
@@ -57,15 +60,21 @@ export default function App() {
     useEffect(() => {
         if (!map.current) return;
         srcMapboxGeocoder.on('result', (event) => {
-            //map.current.setData(event.result.geometry);
             console.log("src", event.result);
             srcMarker.setLngLat(event.result.geometry.coordinates).addTo(map.current);
+            var bounds = new mapboxgl.LngLatBounds();
+            bounds.extend(srcMarker.getLngLat());
+            bounds.extend(destMarker.getLngLat());
+            map.current.fitBounds(bounds, {padding: 100});
           });
 
         destMapboxGeocoder.on('result', (event) => {
-        //map.current.setData(event.result.geometry);
-        console.log("dest", event.result);
-        destMarker.setLngLat(event.result.geometry.coordinates).addTo(map.current);
+            console.log("dest", event.result);
+            destMarker.setLngLat(event.result.geometry.coordinates).addTo(map.current);
+            var bounds = new mapboxgl.LngLatBounds();
+            bounds.extend(srcMarker.getLngLat());
+            bounds.extend(destMarker.getLngLat());
+            map.current.fitBounds(bounds, {padding: 100});
         });
     })
 
@@ -77,9 +86,9 @@ export default function App() {
         setZoom(map.current.getZoom().toFixed(2));
     });
 
-    map.current.on('click', (event) => {
-        marker.setLngLat(event.lngLat).addTo(map.current);
-    });
+    // map.current.on('click', (event) => {
+    //     marker.setLngLat(event.lngLat).addTo(map.current);
+    // });
 
     });
 
