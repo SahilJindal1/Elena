@@ -24,3 +24,7 @@ border-radius: 4px;
 .mapView {
   display: flex;
 }
+
+.mapboxgl-ctrl-geocoder:first-child {
+  z-index: 1001;
+}
