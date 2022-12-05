@@ -1,9 +1,32 @@
 import { useState } from 'react';
 import React from "react";
 import "./InputView.css";
+import findRoute from "../controller/APIs"
 
-const InputView = () => {
+
+const InputView = ({setMyData}) => {
     const [inputs, setInputs] = useState({});
+    const [backend_data, setDataStats] = useState();
+    console.log("backend Data", backend_data);
+
+    const setThisData = (path) => {
+        setMyData(path)
+    }
+
+    const onClickButton = async () => {
+        let data = {
+            "start_latitude": 0.009,
+            "end_latitude":0.02,
+            "start_longitude":0.087,
+            "end_longitude":0.236,
+            "elevation_type":"maximum",
+            "distance_limit": 1.50          
+        }
+        console.log(data);
+        let path = await findRoute(JSON.stringify(data)) //Sends the data to the controller 
+        setDataStats(path)
+        setThisData(path)
+    }
 
     const handleChange = (event) => {
         const name = event.target.name;
@@ -15,6 +38,7 @@ const InputView = () => {
         console.log(inputs);
         setInputs({})
     }
+
 
     return (
         <div className="inputView">
@@ -70,7 +94,8 @@ const InputView = () => {
                     onChange={handleChange}
                 />
             </div>
-            <input type="button" value="Find Route" className='routeButton' onClick={handleSubmit}/>
+            <div>OUTPUT:{backend_data}</div>
+            <input type="button" value="Find Route" className='routeButton' onClick={onClickButton}/>
         </div>
     );
 }
