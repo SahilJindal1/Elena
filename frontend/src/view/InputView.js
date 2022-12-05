@@ -94,8 +94,8 @@ const InputView = ({setMyData}) => {
                     onChange={handleChange}
                 />
             </div>
+            <input type="button" value="Find Route" className='routeButton' onClick={onClickButton}/><br></br>
             <div>OUTPUT:{backend_data}</div>
-            <input type="button" value="Find Route" className='routeButton' onClick={onClickButton}/>
         </div>
     );
 }

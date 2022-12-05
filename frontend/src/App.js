@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import InputView from './view/InputView.js';
 import MapboxView from './view/MapboxView.js';
 import "./App.css";
@@ -15,7 +15,6 @@ export default function App() {
         <div class="main">
             <MapboxView/>
             <InputView setMyPath={setPath} />
-            <InputView/>
         </div>
         );
 }

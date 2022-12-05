@@ -6,8 +6,8 @@ import App from './App';
 import '@mapbox/mapbox-gl-geocoder/lib/mapbox-gl-geocoder.css';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  //<React.StrictMode>
+    <App />,
+  //</React.StrictMode>
   document.getElementById('root')
 );
