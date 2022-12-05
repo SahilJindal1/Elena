@@ -11,12 +11,13 @@ class Map:
         self.url = "https://api.open-elevation.com/api/v1/lookup?locations={}"
         pass
 
-    def generate_map(self,mapFilePath,source,dist):
+    def generate_map(self,source,dist, mapFilePath='./Map.map'):
         """
         # mapFilePath = path to the map file
         # source = (lat,long)
         # dist = ditance in meters
         """
+        
         if(mapFilePath != None):
             if os.path.exists(mapFilePath):
                 print("Map Present")
@@ -46,17 +47,13 @@ class Map:
             url = self.url.format(locationLatLong)
             responseJSON = requests.get(url).json()
             results.extend(responseJSON['results'])
-
         elevationDict = {}
         nodeIds = list(point_dict.keys())
         for idx in range(len(nodeIds)):
             elevationDict[nodeIds[idx]] = results[idx]['elevation']
         
         networkx.set_node_attributes(map, name='elevation', values=elevationDict)
-
         return map
-
-        
 
 # if __name__=="__main__":
 #     newMap = Map()
