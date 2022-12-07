@@ -24,9 +24,6 @@ class find_route(Resource):
         algorithm = algo.algorithms(args['start_latitude'], args['start_longitude'], args['end_latitude'], args['end_longitude'], args['elevation_type'], args['distance_limit'])
         data = algorithm.run()
         #call algorithm functions here and return data
-        data['dijkstra'] = {"path":[0.023,0.134,0.047],
-                                "distance":1,
-                                "elevation_gain":500}
                                 
         return data
 

@@ -3,6 +3,7 @@ import networkx as nx
 import numpy as np
 import astar as ast
 import shortestPath as sh
+import dijkstra as dj
 
 from map_lib import Map
 
@@ -27,6 +28,9 @@ class algorithms:
 
         astarAlgorithm = ast.astar(self.graph, self.src, self.dest, self.limit, self.isMaximum, shortestDistance)
         algorithmValues['a_star'] = astarAlgorithm.run()
+
+        dijkstraAlgorithm = dj.dijkstra(self.graph, self.src, self.dest, self.limit, self.isMaximum, shortestDistance)
+        algorithmValues['dijkstra'] = dijkstraAlgorithm.run()
         return algorithmValues
 
 # if __name__=="__main__":

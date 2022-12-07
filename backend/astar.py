@@ -59,7 +59,7 @@ class astar:
                 latLongPath = list()
                 for node in path:
                     point = self.graph.nodes[node]
-                    latLongPath.append((point['y'], point['x']))
+                    latLongPath.append((point['x'], point['y']))
             
                 values['path'] = latLongPath
                 values['distance'] = distance
