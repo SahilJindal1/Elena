@@ -1,6 +1,7 @@
 .inputView {
-    padding: 20px;
+
     /* border: 1px solid black; */
+    max-width: 320px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -24,14 +25,14 @@
 }
 
 .text-input {
-    max-width: 210px;
-    min-width: 210px;
+    max-width: 180px;
+    min-width: 180px;
     font-family: monospace;
 }
 
 .field {
-    max-width: 210px;
-    min-width: 210px;
+    max-width: 160px;
+    min-width: 100px;
     font-family: monospace;
     font-weight: bold; 
 }
@@ -43,5 +44,11 @@
     background-color: #23374be6;
     border: none;
     color: #f2f8fb;
+    font-family: monospace;
+}
+
+.validationText{
+    color: black;
+    font-size: smaller;
     font-family: monospace;
 }
