@@ -32,6 +32,10 @@ class algorithmUtility:
             return max(0, graph.nodes[node2]["elevation"] - graph.nodes[node1]["elevation"])
         elif type == 'drop':
             return max(0, graph.nodes[node1]["elevation"] - graph.nodes[node2]["elevation"])
+        elif type == 'diff':
+            return graph.nodes[node2]["elevation"] - graph[node1]["elevation"]
+        else:
+            return abs(graph.nodes[node1]["elevation"]-graph.nodes[node2]["elevation"])
 
     def calculateFinalElevation(self, graph, path, type):
         total = 0
