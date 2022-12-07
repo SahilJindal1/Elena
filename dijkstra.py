@@ -2,6 +2,7 @@ import osmnx as ox
 import algorithmUtility as au
 from collections import defaultdict
 import heapq
+import networkx as nx
 
 class dijkstra:
 
@@ -32,7 +33,6 @@ class dijkstra:
         minimum_distances = {self.srcNode:0}
 
         parentDict = defaultdict(int)
-        parentDict[self.srcNode] = -1
 
         while(len(q)!=0):
             currPriority,currDist,currNode = heapq.heappop(q)
@@ -67,6 +67,19 @@ class dijkstra:
             return
 
         path = self.backtrack(currNode,parentDict)
-        finalGain, finalDrop = self.utilities.calculalateFinalElevation(self.graph,path,'gain'),self.utilities.calculalateFinalElevation(self.graph,path,'drop')
+        finalGain, finalDrop = self.utilities.calculateFinalElevation(self.graph,path,'elevation-gain'),self.utilities.calculateFinalElevation(self.graph,path,'elevation-drop')
+        pathLengths = ox.utils_graph.get_route_edge_attributes(self.graph, path, 'length')
+        distance = sum(pathLengths)
+        values = dict()
+        latLongPath = list()    
 
-        return (path,finalGain,finalDrop)
+        print("Here's the path", path)
+
+        for node in path:
+            point = self.graph.nodes[node]
+            latLongPath.append((point['x'], point['y']))
+        
+        values['path'] = latLongPath
+        values['distance'] = distance
+        values['elevation_gain'] = finalGain
+        return values
