@@ -19,7 +19,13 @@ class shortestPath:
         self.shortestDistance = distance
         totalElevationGain = self.utilities.calculateFinalElevation(self.graph, path, 'elevation-gain')
         values = dict()
-        values['path'] = path
+        latLongPath = list()
+
+        for node in path:
+            point = self.graph.nodes[node]
+            latLongPath.append((point['y'], point['x']))
+        
+        values['path'] = latLongPath
         values['distance'] = distance
         values['elevation_gain'] = totalElevationGain
         return values

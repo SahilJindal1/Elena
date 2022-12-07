@@ -29,10 +29,10 @@ class algorithms:
         algorithmValues['a_star'] = astarAlgorithm.run()
         return algorithmValues
 
-if __name__=="__main__":
-    src = tuple((42.35081772765568, -72.52727125397264))
-    dest = tuple((42.386760374718236, -72.52481790025085))
-    alg = algorithms(src[0], src[1], dest[0], dest[1], 'maximum', 125)
-    values = alg.run()
-    print(values)
+# if __name__=="__main__":
+#     src = tuple((42.35081772765568, -72.52727125397264))
+#     dest = tuple((42.386760374718236, -72.52481790025085))
+#     alg = algorithms(src[0], src[1], dest[0], dest[1], 'maximum', 125)
+#     values = alg.run()
+#     print(values)
 
