@@ -1,20 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import InputView from './view/InputView.js';
 import MapboxView from './view/MapboxView.js';
+import AlgorithmTableView from './view/AlgorithmTableView.js';
 import "./App.css";
 
 export default function App() {
-  const [p, setP] = useState({})
+  
+  
+  const [tableValues, setTableValues] = useState()
 
-  const setPath = (my_path) => {
-    setP(my_path)
+  const setAlgorithmValues = (pathValue) => {
+    setTableValues(pathValue)
   }
 
     return (
         
         <div class="main">
             <MapboxView/>
-            <InputView setMyPath={setPath} />
+            <div className='sideView'>
+              <InputView setMyData={setAlgorithmValues} />
+              <AlgorithmTableView data={tableValues} />
+            </div>
         </div>
         );
 }

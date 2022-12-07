@@ -13,7 +13,7 @@ const findRoute = async (data) => {
     }).then(response => response.json())
         .then(sucess_msg => {
             console.log('Successful:', sucess_msg);
-            return data
+            return sucess_msg
         })
         .catch((error_msg) => { 
             console.error('Unsuccessful:', error_msg);

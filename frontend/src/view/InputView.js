@@ -1,31 +1,36 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import React from "react";
 import "./InputView.css";
 import findRoute from "../controller/APIs"
 
+import {src, dest} from './MapboxView';
 
 const InputView = ({setMyData}) => {
     const [inputs, setInputs] = useState({});
-    const [backend_data, setDataStats] = useState();
-    console.log("backend Data", backend_data);
-
     const setThisData = (path) => {
         setMyData(path)
     }
 
     const onClickButton = async () => {
-        let data = {
-            "start_latitude": 0.009,
-            "end_latitude":0.02,
-            "start_longitude":0.087,
-            "end_longitude":0.236,
-            "elevation_type":"maximum",
-            "distance_limit": 1.50          
+        console.log(src, dest);
+        try {
+            let data = {
+                "start_latitude": src[1],
+                "end_latitude": dest[1],
+                "start_longitude": src[0],
+                "end_longitude": dest[0],
+                "elevation_type": inputs.elevationType,
+                "distance_limit": inputs.distanceLimit         
+            }
+            console.log(data);
+            const path = await findRoute(JSON.stringify(data)) //Sends the data to the controller 
+            console.log(path)
+            setThisData(path)
+        } catch(e) {
+            console.log('Missing values');
         }
-        console.log(data);
-        let path = await findRoute(JSON.stringify(data)) //Sends the data to the controller 
-        setDataStats(path)
-        setThisData(path)
+        
+        
     }
 
     const handleChange = (event) => {
@@ -37,6 +42,10 @@ const InputView = ({setMyData}) => {
     const handleSubmit = (event) => {
         console.log(inputs);
         setInputs({})
+    }
+
+    const selectVal = (event) => {
+        console.log(event);
     }
 
 
@@ -72,12 +81,12 @@ const InputView = ({setMyData}) => {
                 </div>
 
                 <div className='field'>
-                <input type="radio" value="Minimize" id="minimize" name="elevationType" className='elevationType'
-                    onChange={handleChange} checked={inputs.elevationType === 'Minimize'}/>
+                <input type="radio" value="minimum" id="minimize" name="elevationType" className='elevationType'
+                    onChange={handleChange} checked={inputs.elevationType === 'minimum'}/>
                 <label>MINIMIZE</label>
                 <br></br>
-                <input type="radio" value="Maximize" id="maximize" name="elevationType" className='elevationType'
-                    onChange={handleChange} checked={inputs.elevationType === 'Maximize'}/>
+                <input type="radio" value="maximum" id="maximize" name="elevationType" className='elevationType'
+                    onChange={handleChange} checked={inputs.elevationType === 'maximum'}/>
                 <label>MAXIMIZE</label>
                 </div>
             </div>
@@ -95,7 +104,6 @@ const InputView = ({setMyData}) => {
                 />
             </div>
             <input type="button" value="Find Route" className='routeButton' onClick={onClickButton}/><br></br>
-            <div>OUTPUT:{backend_data}</div>
         </div>
     );
 }

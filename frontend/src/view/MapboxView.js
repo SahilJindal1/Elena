@@ -6,10 +6,14 @@ import "./MapboxView.css";
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiYXZhbmkxOCIsImEiOiJjbGI0amtmMnYwOHZuM3lsMHpreXZsZXU3In0.9F-GJGlYWjwdwTClH8xI2g';
 
+let src = null;
+let dest = null;
+
 export default function MapboxView() {
 
     const mapContainer = useRef(null);
     const map = useRef(null);
+
     //var marker = new mapboxgl.Marker();
     const [lng, setLng] = useState(-72.50187402113794);
     const [lat, setLat] = useState(42.37314021836991);
@@ -64,6 +68,7 @@ export default function MapboxView() {
             console.log("src", event.result);
             srcMarker.setLngLat(event.result.geometry.coordinates).addTo(map.current);
             var bounds = new mapboxgl.LngLatBounds();
+            src = event.result.geometry.coordinates;
             bounds.extend(srcMarker.getLngLat());
             bounds.extend(destMarker.getLngLat());
             map.current.fitBounds(bounds, {padding: 100});
@@ -73,6 +78,7 @@ export default function MapboxView() {
             console.log("dest", event.result);
             destMarker.setLngLat(event.result.geometry.coordinates).addTo(map.current);
             var bounds = new mapboxgl.LngLatBounds();
+            dest = event.result.geometry.coordinates;
             bounds.extend(srcMarker.getLngLat());
             bounds.extend(destMarker.getLngLat());
             map.current.fitBounds(bounds, {padding: 100});
@@ -103,3 +109,5 @@ export default function MapboxView() {
         </div>
         );
 }
+
+export {src, dest};
