@@ -10,7 +10,7 @@ let map = null;
 let src = null;
 let dest = null;
 
-export function MapboxView() {
+export default function MapboxView() {
 
     const mapContainer = useRef(null);
     map = useRef(null);
@@ -72,6 +72,14 @@ export function MapboxView() {
             bounds.extend(srcMarker.getLngLat());
             bounds.extend(destMarker.getLngLat());
             map.current.fitBounds(bounds, {padding: 100});
+            try{
+                map.current.removeLayer("dijkstra-elevation-path-layer");
+                map.current.removeSource("dijkstra-elevation-path");
+                map.current.removeLayer("astar-elevation-path-layer");
+                map.current.removeSource("astar-elevation-path");
+                map.current.removeLayer("shortest-path-layer");
+                map.current.removeSource("shortest-path");}
+                catch{console.log("First time kid")}
           });
 
         destMapboxGeocoder.on('result', (event) => {
@@ -82,6 +90,15 @@ export function MapboxView() {
             bounds.extend(srcMarker.getLngLat());
             bounds.extend(destMarker.getLngLat());
             map.current.fitBounds(bounds, {padding: 100});
+            map.current.fitBounds(bounds, {padding: 100});
+            try{
+                map.current.removeLayer("dijkstra-elevation-path-layer");
+                map.current.removeSource("dijkstra-elevation-path");
+                map.current.removeLayer("astar-elevation-path-layer");
+                map.current.removeSource("astar-elevation-path");
+                map.current.removeLayer("shortest-path-layer");
+                map.current.removeSource("shortest-path");}
+                catch{console.log("First time kid")}
         });
     })
 
