@@ -10,7 +10,7 @@ let map = null;
 let src = null;
 let dest = null;
 
-export default function MapboxView() {
+export function MapboxView() {
 
     const mapContainer = useRef(null);
     map = useRef(null);
