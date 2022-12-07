@@ -1,5 +1,3 @@
-import React, { useRef, useEffect, useState } from 'react';
-
 import InputView from './view/InputView.js';
 import MapboxView from './view/MapboxView.js';
 import "./App.css";

@@ -21,7 +21,7 @@ export default function MapboxView() {
         accessToken: mapboxgl.accessToken, // Set the access token
         mapboxgl: mapboxgl, // Set the mapbox-gl instance
         marker: false, // Do not use the default marker style
-        placeholder: 'Search source in Amherst',
+        placeholder: 'Search Source',
         proximity: {
             longitude: -72.50187402113794,
             latitude: 42.37314021836991
@@ -33,7 +33,7 @@ export default function MapboxView() {
         accessToken: mapboxgl.accessToken, // Set the access token
         mapboxgl: mapboxgl, // Set the mapbox-gl instance
         marker: false, // Do not use the default marker style
-        placeholder: 'Search destination in Amherst',
+        placeholder: 'Search Destination',
         proximity: {
             longitude: -72.50187402113794,
             latitude: 42.37314021836991

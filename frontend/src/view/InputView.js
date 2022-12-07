@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import React from "react";
-import ReactDOM from 'react-dom';
 import "./InputView.css";
 
 const InputView = () => {
@@ -19,7 +18,7 @@ const InputView = () => {
 
     return (
         <div className="inputView">
-            <div className='formFields'>
+            {/* <div className='formFields'>
                 <div className='label startLabel'>
                     Start Destination
                 </div>
@@ -42,7 +41,7 @@ const InputView = () => {
                     value={inputs.endDestination || ""} 
                     onChange={handleChange}
                 />
-            </div>
+            </div> */}
             <div className='formFields'>
                 <div className='label elevationTypeLabel'>
                     Elevation Gain
@@ -52,7 +51,7 @@ const InputView = () => {
                 <input type="radio" value="Minimize" id="minimize" name="elevationType" className='elevationType'
                     onChange={handleChange} checked={inputs.elevationType === 'Minimize'}/>
                 <label>MINIMIZE</label>
-
+                <br></br>
                 <input type="radio" value="Maximize" id="maximize" name="elevationType" className='elevationType'
                     onChange={handleChange} checked={inputs.elevationType === 'Maximize'}/>
                 <label>MAXIMIZE</label>
@@ -60,7 +59,7 @@ const InputView = () => {
             </div>
             <div className='formFields'>
                 <div className='label distanceLimitLabel'>
-                    Max. Distance Limit
+                    Max. Distance Limit (x%)
                 </div>
                 <input 
                     type="number" 
