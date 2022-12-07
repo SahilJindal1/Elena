@@ -7,6 +7,9 @@ import "./MapboxView.css";
 mapboxgl.accessToken = 'pk.eyJ1IjoiYXZhbmkxOCIsImEiOiJjbGI0amtmMnYwOHZuM3lsMHpreXZsZXU3In0.9F-GJGlYWjwdwTClH8xI2g';
 let map = null;
 
+let src = null;
+let dest = null;
+
 export default function MapboxView() {
 
     const mapContainer = useRef(null);
@@ -65,6 +68,7 @@ export default function MapboxView() {
             console.log("src", event.result);
             srcMarker.setLngLat(event.result.geometry.coordinates).addTo(map.current);
             var bounds = new mapboxgl.LngLatBounds();
+            src = event.result.geometry.coordinates;
             bounds.extend(srcMarker.getLngLat());
             bounds.extend(destMarker.getLngLat());
             map.current.fitBounds(bounds, {padding: 100});
@@ -74,6 +78,7 @@ export default function MapboxView() {
             console.log("dest", event.result);
             destMarker.setLngLat(event.result.geometry.coordinates).addTo(map.current);
             var bounds = new mapboxgl.LngLatBounds();
+            dest = event.result.geometry.coordinates;
             bounds.extend(srcMarker.getLngLat());
             bounds.extend(destMarker.getLngLat());
             map.current.fitBounds(bounds, {padding: 100});
@@ -104,7 +109,6 @@ export default function MapboxView() {
         </div>
         );
 }
-
 
 function displayRoute() {
 
@@ -216,3 +220,5 @@ function displayRoute() {
         }
     });
 }
+
+export {src, dest};

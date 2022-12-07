@@ -1,9 +1,37 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import React from "react";
 import "./InputView.css";
+import findRoute from "../controller/APIs"
 
-const InputView = () => {
+import {src, dest} from './MapboxView';
+
+const InputView = ({setMyData}) => {
     const [inputs, setInputs] = useState({});
+    const setThisData = (path) => {
+        setMyData(path)
+    }
+
+    const onClickButton = async () => {
+        console.log(src, dest);
+        try {
+            let data = {
+                "start_latitude": src[1],
+                "end_latitude": dest[1],
+                "start_longitude": src[0],
+                "end_longitude": dest[0],
+                "elevation_type": inputs.elevationType,
+                "distance_limit": inputs.distanceLimit         
+            }
+            console.log(data);
+            const path = await findRoute(JSON.stringify(data)) //Sends the data to the controller 
+            console.log(path)
+            setThisData(path)
+        } catch(e) {
+            console.log('Missing values');
+        }
+        
+        
+    }
 
     const handleChange = (event) => {
         const name = event.target.name;
@@ -15,6 +43,11 @@ const InputView = () => {
         console.log(inputs);
         setInputs({})
     }
+
+    const selectVal = (event) => {
+        console.log(event);
+    }
+
 
     return (
         <div className="inputView">
@@ -48,12 +81,12 @@ const InputView = () => {
                 </div>
 
                 <div className='field'>
-                <input type="radio" value="Minimize" id="minimize" name="elevationType" className='elevationType'
-                    onChange={handleChange} checked={inputs.elevationType === 'Minimize'}/>
+                <input type="radio" value="minimum" id="minimize" name="elevationType" className='elevationType'
+                    onChange={handleChange} checked={inputs.elevationType === 'minimum'}/>
                 <label>MINIMIZE</label>
                 <br></br>
-                <input type="radio" value="Maximize" id="maximize" name="elevationType" className='elevationType'
-                    onChange={handleChange} checked={inputs.elevationType === 'Maximize'}/>
+                <input type="radio" value="maximum" id="maximize" name="elevationType" className='elevationType'
+                    onChange={handleChange} checked={inputs.elevationType === 'maximum'}/>
                 <label>MAXIMIZE</label>
                 </div>
             </div>
@@ -70,7 +103,7 @@ const InputView = () => {
                     onChange={handleChange}
                 />
             </div>
-            <input type="button" value="Find Route" className='routeButton' onClick={handleSubmit}/>
+            <input type="button" value="Find Route" className='routeButton' onClick={onClickButton}/><br></br>
         </div>
     );
 }
