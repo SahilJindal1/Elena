@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React from "react";
 import './AlgorithmTableView.css'
 
 const AlgorithmTableView = ({data}) => {
@@ -21,7 +21,7 @@ const AlgorithmTableView = ({data}) => {
 
     return (
         <div>
-            <table class="styled-table">
+            <table className="styled-table">
                 <thead>
                     <tr>
                         <th>Algorithm</th>
@@ -35,7 +35,7 @@ const AlgorithmTableView = ({data}) => {
                         <td>{shortestDistance}</td>
                         <td>{shortestElevation}</td>
                     </tr>
-                    <tr class="active-row">
+                    <tr className="active-row">
                         <td>Elena-Dijkstra</td>
                         <td>{dijkstraDistance}</td>
                         <td>{dijkstrElevation}</td>

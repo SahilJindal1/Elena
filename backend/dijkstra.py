@@ -37,7 +37,21 @@ class dijkstra:
             if currNode not in visitedNodes:
                 visitedNodes.add(currNode)
                 if currNode == self.destNode:
-                    return currPriority,currDist,parentDict
+                    path = self.backtrack(currNode,parentDict)
+                    finalGain, finalDrop = self.utilities.calculateFinalElevation(self.graph,path,'elevation-gain'),self.utilities.calculateFinalElevation(self.graph,path,'elevation-drop')
+                    pathLengths = ox.utils_graph.get_route_edge_attributes(self.graph, path, 'length')
+                    distance = sum(pathLengths)
+                    values = dict()
+                    latLongPath = list()    
+
+                    for node in path:
+                        point = self.graph.nodes[node]
+                        latLongPath.append((point['x'], point['y']))
+                    
+                    values['path'] = latLongPath
+                    values['distance'] = distance
+                    values['elevation_gain'] = finalGain
+                    return values
                 
                 for neighbor in self.graph.neighbors(currNode):
                     if neighbor in visitedNodes:
@@ -60,24 +74,5 @@ class dijkstra:
                         parentDict[neighbor] = currNode
                         minimum_distances[neighbor] = nextDiff
                         heapq.heappush(q,(nextDiff,nextDist,neighbor))
+
         
-        if not currDist:
-            return
-
-        path = self.backtrack(currNode,parentDict)
-        finalGain, finalDrop = self.utilities.calculateFinalElevation(self.graph,path,'elevation-gain'),self.utilities.calculateFinalElevation(self.graph,path,'elevation-drop')
-        pathLengths = ox.utils_graph.get_route_edge_attributes(self.graph, path, 'length')
-        distance = sum(pathLengths)
-        values = dict()
-        latLongPath = list()    
-
-        print("Here's the path", path)
-
-        for node in path:
-            point = self.graph.nodes[node]
-            latLongPath.append((point['x'], point['y']))
-        
-        values['path'] = latLongPath
-        values['distance'] = distance
-        values['elevation_gain'] = finalGain
-        return values

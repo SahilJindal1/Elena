@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import InputView from './view/InputView.js';
 import MapboxView from './view/MapboxView.js';
 import AlgorithmTableView from './view/AlgorithmTableView.js';
@@ -15,7 +15,7 @@ export default function App() {
 
     return (
         
-        <div class="main">
+        <div className="main">
             <MapboxView/>
             <div className='sideView'>
               <InputView setMyData={setAlgorithmValues} />
