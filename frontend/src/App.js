@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import InputView from './view/InputView.js';
-import {MapboxView, DisplayRoute} from './view/MapboxView.js';
+import MapboxView from './view/MapboxView.js';
 import AlgorithmTableView from './view/AlgorithmTableView.js';
 import "./App.css";
-//import  from './view/MapboxView.js';
+import {DisplayRoute} from './view/MapboxView.js';
 
 export default function App() {
   

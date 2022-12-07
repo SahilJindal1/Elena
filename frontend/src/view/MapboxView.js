@@ -137,16 +137,12 @@ export function DisplayRoute(response) {
         'id': 'dijkstra-elevation-path-layer',
         'type': 'line',
         'source': 'dijkstra-elevation-path',
-        'properties': {
-            'description': "Ford's Theater",
-            'icon': 'theatre-15'
-        },
         'layout': {
             'line-join': 'round',
             'line-cap': 'round',
         },
         'paint': {
-            'line-color': '#008000',
+            'line-color': '#AFA925',
             'line-width': 5
         }
     });
@@ -172,16 +168,12 @@ export function DisplayRoute(response) {
         'id': 'astar-elevation-path-layer',
         'type': 'line',
         'source': 'astar-elevation-path',
-        'properties': {
-            'description': "Ford's Theater",
-            'icon': 'theatre-15'
-        },
         'layout': {
             'line-join': 'round',
             'line-cap': 'round',
         },
         'paint': {
-            'line-color': '#005000',
+            'line-color': '#55AF25',
             'line-width': 5
         }
     });
@@ -206,16 +198,12 @@ export function DisplayRoute(response) {
         'id': 'shortest-path-layer',
         'type': 'line',
         'source': 'shortest-path',
-        'properties': {
-            'description': "Ford's Theater",
-            'icon': 'theatre-15'
-        },
         'layout': {
             'line-join': 'round',
             'line-cap': 'round',
         },
         'paint': {
-            'line-color': '#002000',
+            'line-color': '#253AAF',
             'line-width': 5
         }
     });
