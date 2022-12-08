@@ -4,16 +4,19 @@ import algorithmUtility as au
 
 class astar:
     def __init__(self, graph, src, dest, limit, isMaximum, shortestDistance) -> None:
-        self.graph = graph
-        self.src = src
-        self.dest = dest
-        self.limit = limit
-        self.isMaximum = isMaximum
-        # X = long, Y = lat
-        self.srcNode, self.srcDistance = ox.distance.nearest_nodes(self.graph, X = self.src[1], Y=self.src[0], return_dist = True)
-        self.destNode, self.destDistance = ox.distance.nearest_nodes(self.graph, X = self.dest[1], Y=self.dest[0], return_dist = True)
-        self.shortestDistance = shortestDistance
-        self.utilities = au.algorithmUtility()
+        if graph and src and dest and limit and isMaximum and shortestDistance is None:
+            raise Exception("Missing Parameters in A*")
+        else:
+            self.graph = graph
+            self.src = src
+            self.dest = dest
+            self.limit = limit
+            self.isMaximum = isMaximum
+            # X = long, Y = lat
+            self.srcNode, self.srcDistance = ox.distance.nearest_nodes(self.graph, X = self.src[1], Y=self.src[0], return_dist = True)
+            self.destNode, self.destDistance = ox.distance.nearest_nodes(self.graph, X = self.dest[1], Y=self.dest[0], return_dist = True)
+            self.shortestDistance = shortestDistance
+            self.utilities = au.algorithmUtility()
 
     def calculateNodeHeuristics(self):
         destination = self.graph.nodes[self.destNode]
@@ -27,6 +30,8 @@ class astar:
         return heuristics
 
     def backtrack(self, currNode, parent):
+        if currNode and parent is None:
+            raise Exception("Missing parameters in backtrack")
         path = [currNode]
 
         while currNode in parent:
