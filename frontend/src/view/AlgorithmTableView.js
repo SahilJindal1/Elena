@@ -20,7 +20,7 @@ const AlgorithmTableView = ({data}) => {
     }
 
     return (
-        <div>
+        <div className="algorithm-table-view">
             <table className="styled-table">
                 <thead>
                     <tr>
@@ -36,12 +36,12 @@ const AlgorithmTableView = ({data}) => {
                         <td>{shortestElevation}</td>
                     </tr>
                     <tr className="active-row">
-                        <td>Elena-Dijkstra</td>
+                        <td>EleNA - Dijkstra</td>
                         <td>{dijkstraDistance}</td>
                         <td>{dijkstrElevation}</td>
                     </tr>
                     <tr>
-                        <td>Elena-A*</td>
+                        <td>EleNA - A*</td>
                         <td>{astarDistance}</td>
                         <td>{astarElevation}</td>
                     </tr>

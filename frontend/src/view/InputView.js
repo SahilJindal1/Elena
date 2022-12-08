@@ -39,6 +39,7 @@ export default function InputView({setMyData}) {
             console.log(path)
             setThisData(path)
         } catch(e) {
+            console.log(e);
             console.log('Missing values');
         } 
     }
@@ -52,7 +53,7 @@ export default function InputView({setMyData}) {
         <div>
             <Form onSubmit={handleSubmit(onSubmit)} className="inputView">
                 <Form.Field className="formFields">
-                <p className="label">Elevation Gain</p>
+                <p className="label">Elevation Gain:</p>
                 <div className='field'>
                     <label htmlFor="field-Minimum">
                         
@@ -63,7 +64,7 @@ export default function InputView({setMyData}) {
                             id="field-Minimum"
                             onChange={handleChange}
                         />
-                        Minimum
+                        Minimize
                     </label>
                     <label htmlFor="field-Maximum">
                         <input
@@ -73,13 +74,13 @@ export default function InputView({setMyData}) {
                             id="field-Maximum"
                             onChange={handleChange}
                         />
-                        Maximum
+                        Maximize
                     </label>
                 </div>
                 </Form.Field >
                 {errors.elevationType && <p className='validationText'>Select Elevation Type</p>}
                 <Form.Field className="formFields">
-                    <label className='label'>Max. Distance Limit (x%)</label>
+                    <label className='label'>Max. Limit (x%):</label>
                     <input
                         placeholder='%'
                         type="number"

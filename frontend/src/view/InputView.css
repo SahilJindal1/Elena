@@ -1,40 +1,49 @@
 .inputView {
 
     /* border: 1px solid black; */
-    max-width: 320px;
+    /* max-width: 320px; */
     display: flex;
     flex-direction: column;
-    align-items: center;
-    background-color: #faf5f5;
-    color: #056e13;
-    width: 25vw;
+    /* align-items: center; */
+    
+    /* faf5f5 */
+    color: #ffffff;
+    padding-top: 40px;
+    /* width: 25vw; */
 }
 
 .formFields {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin: 10px 0;
+    /* align-items: left;
+    margin: 10px 0; */
+    padding: 5px;
 }
 
 .label {
-    width: 150px;
-    margin-right: 10px;
-    font-family: monospace;
+    /* width: 150px; */
+    /* margin-right: 10px; */
+    font-family: sans-serif;
     font-weight: bold; 
+    margin-left: 30px;
+    font-size: 17px;
 }
 
 .text-input {
-    max-width: 180px;
-    min-width: 180px;
-    font-family: monospace;
+    max-width: 150px;
+    min-width: 150px;
+    font-family: sans-serif;
+    margin-left: 15px;
 }
 
 .field {
-    max-width: 160px;
-    min-width: 100px;
-    font-family: monospace;
-    font-weight: bold; 
+    /* max-width: 160px; */
+    /* min-width: 100px; */
+    font-family: sans-serif;
+    margin-left: 15px;
+    /* align-self: center; */
+    /* font-weight: bold;  */
 }
 
 .routeButton {
@@ -44,11 +53,17 @@
     background-color: #23374be6;
     border: none;
     color: #f2f8fb;
-    font-family: monospace;
+    font-family: sans-serif;
+    font-weight: bold; 
+    /* align-items: center; */
+    margin: 30px;
+    align-self: center;
+    cursor:pointer;
+    border-radius: 4px;
 }
 
 .validationText{
     color: black;
     font-size: smaller;
-    font-family: monospace;
+    font-family: sans-serif;
 }

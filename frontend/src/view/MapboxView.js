@@ -58,8 +58,8 @@ export default function MapboxView() {
         zoom: 13
     });
     
-    map.current.addControl(srcMapboxGeocoder);
-    map.current.addControl(destMapboxGeocoder);
+    map.current.addControl(srcMapboxGeocoder, 'top-left');
+    map.current.addControl(destMapboxGeocoder, 'top-left');
     map.current.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
     });
 
@@ -72,15 +72,7 @@ export default function MapboxView() {
             src = event.result.geometry.coordinates;
             bounds.extend(srcMarker.getLngLat());
             bounds.extend(destMarker.getLngLat());
-            map.current.fitBounds(bounds, {padding: 100});
-            try{
-                map.current.removeLayer("dijkstra-elevation-path-layer");
-                map.current.removeSource("dijkstra-elevation-path");
-                map.current.removeLayer("astar-elevation-path-layer");
-                map.current.removeSource("astar-elevation-path");
-                map.current.removeLayer("shortest-path-layer");
-                map.current.removeSource("shortest-path");}
-                catch{console.log("First time kid")}
+            map.current.fitBounds(bounds, {padding: 100});          
           });
 
         destMapboxGeocoder.on('result', (event) => {
@@ -92,14 +84,6 @@ export default function MapboxView() {
             bounds.extend(destMarker.getLngLat());
             map.current.fitBounds(bounds, {padding: 100});
             map.current.fitBounds(bounds, {padding: 100});
-            try{
-                map.current.removeLayer("dijkstra-elevation-path-layer");
-                map.current.removeSource("dijkstra-elevation-path");
-                map.current.removeLayer("astar-elevation-path-layer");
-                map.current.removeSource("astar-elevation-path");
-                map.current.removeLayer("shortest-path-layer");
-                map.current.removeSource("shortest-path");}
-                catch{console.log("First time kid")}
         });
     })
 
@@ -134,6 +118,14 @@ export function DisplayRoute(response) {
     //     //error
     //     return ""
     // }
+    try{
+        map.current.removeLayer("dijkstra-elevation-path-layer");
+        map.current.removeSource("dijkstra-elevation-path");
+        map.current.removeLayer("astar-elevation-path-layer");
+        map.current.removeSource("astar-elevation-path");
+        map.current.removeLayer("shortest-path-layer");
+        map.current.removeSource("shortest-path");}
+        catch{console.log("First time kid")}
     console.log("here")
     map.current.addSource('dijkstra-elevation-path', {
         type: 'geojson',

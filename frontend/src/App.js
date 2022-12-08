@@ -22,8 +22,9 @@ export default function App() {
     return (
         
         <div className="main">
-            <MapboxView/>
+            <MapboxView className='mapView'/>
             <div className='sideView'>
+              <img src="https://drive.google.com/uc?export=view&id=16clIzknlokS-moS1RTtkL5MjEv0hkXIX" width="150" height="60"/> 
               <InputView setMyData={setAlgorithmValues} />
               <AlgorithmTableView data={tableValues} />
             </div>
