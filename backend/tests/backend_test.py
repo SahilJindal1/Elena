@@ -130,22 +130,22 @@ def test_shortest_diff_location():
     map = Map()
     amherstCoordinates = tuple((42.37444161675649, -72.51956880913377))
     graph = map.generate_map(amherstCoordinates, 15000)
-    source = tuple((42.35081772765568, -72.52727125397264))
-    destination = tuple((42.386760374718236, -72.52481790025085))
+    source = tuple((42.3710233, -72.5175895))
+    destination = tuple((42.351556, -72.527381))
 
     shortest_path = sp.shortestPath(graph, source, destination)
     shortest_path_values = shortest_path.run()
 
-    assert len(shortest_path_values['path']) == 103
-    assert shortest_path_values['distance'] == 4633.4389999999985
-    assert shortest_path_values['elevation_gain'] == 75
+    assert len(shortest_path_values['path']) == 35
+    assert shortest_path_values['distance'] == 2687.1060000000007
+    assert shortest_path_values['elevation_gain'] == 15
 
 def test_aStar_diff_location_max_elevation():
     map = Map()
     amherstCoordinates = tuple((42.37444161675649, -72.51956880913377))
     graph = map.generate_map(amherstCoordinates, 15000)
-    source = tuple((42.35081772765568, -72.52727125397264))
-    destination = tuple((42.386760374718236, -72.52481790025085))
+    source = tuple((42.3710233, -72.5175895))
+    destination = tuple((42.351556, -72.527381))
     limit = 1.25
     isMaximum = True
     shortest_distance = sp.shortestPath(graph, source, destination).run()['distance']
@@ -153,16 +153,16 @@ def test_aStar_diff_location_max_elevation():
     a_star = at.astar(graph, source, destination, limit, isMaximum, shortest_distance)
     a_star_values = a_star.run()
 
-    assert len(a_star_values['path']) == 95
-    assert a_star_values['distance'] == 5747.205000000002
-    assert a_star_values['elevation_gain'] == 87
+    assert len(a_star_values['path']) == 33
+    assert a_star_values['distance'] == 2857.2499999999995
+    assert a_star_values['elevation_gain'] == 11
 
 def test_aStar_diff_location_min_elevation():
     map = Map()
     amherstCoordinates = tuple((42.37444161675649, -72.51956880913377))
     graph = map.generate_map(amherstCoordinates, 15000)
-    source = tuple((42.35081772765568, -72.52727125397264))
-    destination = tuple((42.386760374718236, -72.52481790025085))
+    source = tuple((42.3710233, -72.5175895))
+    destination = tuple((42.351556, -72.527381))
     limit = 1.25
     isMaximum = False
     shortest_distance = sp.shortestPath(graph, source, destination).run()['distance']
@@ -170,9 +170,43 @@ def test_aStar_diff_location_min_elevation():
     a_star = at.astar(graph, source, destination, limit, isMaximum, shortest_distance)
     a_star_values = a_star.run()
 
-    assert len(a_star_values['path']) == 95
-    assert a_star_values['distance'] == 5747.395000000001
-    assert a_star_values['elevation_gain'] == 87
+    assert len(a_star_values['path']) == 33
+    assert a_star_values['distance'] == 2857.2499999999995
+    assert a_star_values['elevation_gain'] == 11
+
+def test_dijkstra_diff_location_max_elevation():
+    map = Map()
+    amherstCoordinates = tuple((42.37444161675649, -72.51956880913377))
+    graph = map.generate_map(amherstCoordinates, 15000)
+    source = tuple((42.3710233, -72.5175895))
+    destination = tuple((42.351556, -72.527381))
+    limit = 1.25
+    isMaximum = True
+    shortest_distance = sp.shortestPath(graph, source, destination).run()['distance']
+
+    dijkstra = dj.dijkstra(graph, source, destination, limit, isMaximum, shortest_distance)
+    a_star_values = dijkstra.run()
+
+    assert len(a_star_values['path']) == 68
+    assert a_star_values['distance'] == 3244.9270000000006
+    assert a_star_values['elevation_gain'] == 41
+
+def test_dijkstra_diff_location_min_elevation():
+    map = Map()
+    amherstCoordinates = tuple((42.37444161675649, -72.51956880913377))
+    graph = map.generate_map(amherstCoordinates, 15000)
+    source = tuple((42.3710233, -72.5175895))
+    destination = tuple((42.351556, -72.527381))
+    limit = 1.25
+    isMaximum = False
+    shortest_distance = sp.shortestPath(graph, source, destination).run()['distance']
+
+    dijkstra = dj.dijkstra(graph, source, destination, limit, isMaximum, shortest_distance)
+    a_star_values = dijkstra.run()
+
+    assert len(a_star_values['path']) == 68
+    assert a_star_values['distance'] == 3244.9270000000006
+    assert a_star_values['elevation_gain'] == 41
 
 
 
