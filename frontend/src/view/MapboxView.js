@@ -55,11 +55,12 @@ export default function MapboxView() {
         container: mapContainer.current,
         style: 'mapbox://styles/mapbox/streets-v12',
         center: [lng, lat],
-        zoom: zoom
+        zoom: 13
     });
     
     map.current.addControl(srcMapboxGeocoder);
     map.current.addControl(destMapboxGeocoder);
+    map.current.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
     });
 
     useEffect(() => {
