@@ -10,19 +10,14 @@ export default function App() {
   
   const [tableValues, setTableValues] = useState()
 
-  //const showRoute = (pathValue) => {
-    
-  //}
-
   const setAlgorithmValues = (pathValue) => {
     setTableValues(pathValue);
-    DisplayRoute(pathValue);
   }
 
     return (
         
         <div className="main">
-            <MapboxView className='mapView'/>
+            <MapboxView response={tableValues} className='mapView'/>
             <div className='sideView'>
               <img src="https://drive.google.com/uc?export=view&id=16clIzknlokS-moS1RTtkL5MjEv0hkXIX" width="150" height="60"/> 
               <InputView setMyData={setAlgorithmValues} />

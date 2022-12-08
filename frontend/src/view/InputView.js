@@ -52,7 +52,7 @@ export default function InputView({setMyData}) {
 
     const onReset = () => {
         console.log("resetting");
-        ResetTableView();
+        setMyData(undefined)
         ResetMap();
     }
 

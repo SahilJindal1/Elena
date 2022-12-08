@@ -10,8 +10,8 @@ let map = null;
 let src = null;
 let dest = null;
 
-export default function MapboxView() {
-
+export default function MapboxView({response}) {
+    console.log("Rerender")
     const mapContainer = useRef(null);
     map = useRef(null);
     //var marker = new mapboxgl.Marker();
@@ -101,6 +101,11 @@ export default function MapboxView() {
 
     });
 
+    if (response !== undefined)
+    {
+        DisplayRoute(response)
+    }
+
     return (
         
         <div className="mapView">
@@ -109,7 +114,7 @@ export default function MapboxView() {
             </div>
             <div ref={mapContainer} className="map-container" />
         </div>
-        );
+    );
 }
 
 export function DisplayRoute(response) {
@@ -118,14 +123,18 @@ export function DisplayRoute(response) {
     //     //error
     //     return ""
     // }
+    console.log("Layers", map.current.getStyle().layers)
     try{
+        
         map.current.removeLayer("dijkstra-elevation-path-layer");
         map.current.removeSource("dijkstra-elevation-path");
         map.current.removeLayer("astar-elevation-path-layer");
         map.current.removeSource("astar-elevation-path");
         map.current.removeLayer("shortest-path-layer");
-        map.current.removeSource("shortest-path");}
-        catch{console.log("First time kid")}
+        map.current.removeSource("shortest-path");
+    } catch {
+        console.log("First time kid")
+    }
     console.log("here")
     map.current.addSource('dijkstra-elevation-path', {
         type: 'geojson',

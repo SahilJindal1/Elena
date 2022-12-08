@@ -1,8 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import './AlgorithmTableView.css'
 
-
-
 const AlgorithmTableView = ({data}) => {
     let shortestDistance = null;
     let shortestElevation = null;
@@ -12,22 +10,12 @@ const AlgorithmTableView = ({data}) => {
     let astarElevation = null;
     console.log("final data", data)
     if(data !== undefined) {
-        // if (data['shortest_path']['distance'] === '') {
-        //     shortestDistance.current = data['shortest_path']['distance']
-        //     shortestElevation.current = data['shortest_path']['elevation_gain']
-        //     dijkstraDistance.current = data['dijkstra']['distance']
-        //     dijkstrElevation.current = data['dijkstra']['elevation_gain']
-        //     astarDistance.current = data['a_star']['distance']
-        //     astarElevation.current = data['a_star']['elevation_gain']
-        // }
-        //else {
             shortestDistance = data['shortest_path']['distance'].toFixed(3)
             shortestElevation = data['shortest_path']['elevation_gain'].toFixed(3)
             dijkstraDistance = data['dijkstra']['distance'].toFixed(3)
             dijkstrElevation = data['dijkstra']['elevation_gain'].toFixed(3)
             astarDistance = data['a_star']['distance'].toFixed(3)
-            astarElevation = data['a_star']['elevation_gain'].toFixed(3)
-        
+            astarElevation = data['a_star']['elevation_gain'].toFixed(3)   
     }
 
     return (
