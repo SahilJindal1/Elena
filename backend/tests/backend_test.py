@@ -2,7 +2,7 @@
 import sys
 import os
 import pytest
-sys.path.append('../backend')
+sys.path.append(os.path.split(os.path.dirname(__file__))[0])
 import algorithms as al
 import dijkstra as dj
 import astar as at
