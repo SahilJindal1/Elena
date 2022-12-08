@@ -8,6 +8,8 @@ class dijkstra:
     def __init__(self,graph,src,dest,limit,isMaximum,shortestDistance) -> None:
         if graph and src and dest and limit and isMaximum and shortestDistance is None:
             raise Exception("None type Parameters in Dijkstra")
+        elif (graph and src and dest and limit and isMaximum and shortestDistance) == '':
+            raise Exception("Empty Parameters in Dijkstra")
         else:
             self.graph = graph
             self.src = src
@@ -19,18 +21,10 @@ class dijkstra:
             self.isMaximum = isMaximum
             self.limit = limit
     
-    def backtrack(self, currNode, parent):
-        if currNode and parent is None:
-            raise Exception("None type parameters in backtrack")
-        path = [currNode]
-
-        while currNode in parent:
-            currNode = parent[currNode]
-            path.append(currNode)
-
-        return path[::-1]
-
     def run(self):
+        if (self.srcNode and self.destNode) is None:
+            raise Exception("Not Valid Nodes")
+            
         q = [(0.0, 0.0, self.srcNode)]
         visitedNodes = set()
         minimum_distances = {self.srcNode:0}
@@ -42,7 +36,7 @@ class dijkstra:
             if currNode not in visitedNodes:
                 visitedNodes.add(currNode)
                 if currNode == self.destNode:
-                    path = self.backtrack(currNode,parentDict)
+                    path = self.utilities.backtrack(currNode,parentDict)
                     finalGain, finalDrop = self.utilities.calculateFinalElevation(self.graph,path,'elevation-gain'),self.utilities.calculateFinalElevation(self.graph,path,'elevation-drop')
                     pathLengths = ox.utils_graph.get_route_edge_attributes(self.graph, path, 'length')
                     distance = sum(pathLengths)

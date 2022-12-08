@@ -11,7 +11,8 @@ class algorithms:
     def __init__(self, startLatitude, startLongitude, endLatitude, endLongitude, elevationType, distanceLimit) -> None:
         if (startLatitude and startLongitude and endLatitude and endLongitude and elevationType and distanceLimit) is None:
             raise Exception("None type Parameters in Algorithms")
-
+        elif (startLatitude and startLongitude and endLatitude and endLongitude and elevationType and distanceLimit) == '':
+            raise Exception("Empty Parameters in Algorithms")
         else:
             amherstCoordinates = tuple((42.37444161675649, -72.51956880913377))
             self.map = Map()
@@ -26,6 +27,9 @@ class algorithms:
             print(self.graph.nodes[self.srcNode], self.graph.nodes[self.destNode])
 
     def run(self):
+        if (self.srcNode and self.destNode) is None:
+            raise Exception("Not Valid Nodes")
+            
         algorithmValues = {}
         shortestPathAlgorithm = sh.shortestPath(self.graph, self.src, self.dest)
         algorithmValues['shortest_path'] = shortestPathAlgorithm.run()

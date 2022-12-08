@@ -6,6 +6,8 @@ class astar:
     def __init__(self, graph, src, dest, limit, isMaximum, shortestDistance) -> None:
         if graph and src and dest and limit and isMaximum and shortestDistance is None:
             raise Exception("None type Parameters in A*")
+        elif (graph and src and dest and limit and isMaximum and shortestDistance) == '':
+            raise Exception("Empty Parameters in A*")
         else:
             self.graph = graph
             self.src = src
@@ -29,18 +31,10 @@ class astar:
 
         return heuristics
 
-    def backtrack(self, currNode, parent):
-        if currNode and parent is None:
-            raise Exception("None type parameters in backtrack")
-        path = [currNode]
-
-        while currNode in parent:
-            currNode = parent[currNode]
-            path.append(currNode)
-
-        return path[::-1]
-
     def run(self):
+        if (self.srcNode and self.destNode) is None:
+            raise Exception("Not Valid Nodes")
+
         open, closed = set(), set()
         g, normalDistance, f, parent = dict(), dict(), dict(), dict()
         h = self.calculateNodeHeuristics()
@@ -55,7 +49,7 @@ class astar:
         while len(open) > 0 :
             currNode = min(open, key=lambda x: f[x]) 
             if currNode == self.destNode:
-                path = self.backtrack(currNode, parent)
+                path = self.utilities.backtrack(currNode, parent)
                 totalElevationGain = self.utilities.calculateFinalElevation(self.graph, path, 'elevation-gain')
                 pathLengths = ox.utils_graph.get_route_edge_attributes(self.graph, path, 'length')
                 distance = sum(pathLengths)

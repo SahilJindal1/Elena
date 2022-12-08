@@ -50,9 +50,56 @@ def test_aStar_input_validation_succeeds_none():
     with pytest.raises(Exception):
         at.astar(graph, source, destination, limit, isMaximum, shortest_distance)
 
-def test_calculateDistanceUsingCoords_input_validation():
+def test_algorithms_input_validation_succeeds_empty():
+    source = tuple(('', ''))
+    destination = tuple(('', ''))
+    elevation_type = "maximum"
+    distance_limit = 125
+
+    with pytest.raises(Exception):
+        al.algorithms(source[0], source[1], destination[0], destination[1], elevation_type, distance_limit)
+
+def test_shortest_input_validation_succeeds_empty():
+    graph = ''
+    source = tuple((42.3710233, -72.5175895))
+    destination = tuple((42.351556, -72.527381))
+
+    with pytest.raises(Exception):
+        sp.shortestPath(graph, source, destination)
+
+def test_dijsktra_input_validation_succeeds_empty():
+    graph = ''
+    source = tuple((42.3710233, -72.5175895))
+    destination = tuple((42.351556, -72.527381))
+    limit = ''
+    isMaximum = True
+    shortest_distance = ''
+
+    with pytest.raises(Exception):
+        dj.dijkstra(graph, source, destination, limit, isMaximum, shortest_distance)
+
+def test_aStar_input_validation_succeeds_empty():
+    graph = ''
+    source = tuple((42.3710233, -72.5175895))
+    destination = tuple((42.351556, -72.527381))
+    limit = ''
+    isMaximum = True
+    shortest_distance = ''
+
+    with pytest.raises(Exception):
+        at.astar(graph, source, destination, limit, isMaximum, shortest_distance)
+
+def test_calculateDistanceUsingCoords_input_validation_None():
     source = None
     destination = None
+
+    with pytest.raises(Exception):
+        utilty = au.algorithmUtility()
+        utilty.calculateDistanceUsingCoords(source, destination)
+
+def test_calculateDistanceUsingCoords_input_validation_Empty():
+    source = ''
+    destination = ''
 
     with pytest.raises(Exception):
         utilty = au.algorithmUtility()
@@ -67,11 +114,21 @@ def test_calculateDistanceUsingCoords():
     
     assert distance == 2309.3278617748715
 
-def test_calculateNodeCosts_input_validation():
+def test_calculateNodeCosts_input_validation_None():
     graph = None
     sourceNode = 3271341845
     destinationNode = 3271341826
     type = None
+
+    with pytest.raises(Exception):
+        utilty = au.algorithmUtility()
+        utilty.calculateNodeCosts(graph, sourceNode, destinationNode, type)
+
+def test_calculateNodeCosts_input_validation_Empty():
+    graph = ''
+    sourceNode = 3271341845
+    destinationNode = 3271341826
+    type = ''
 
     with pytest.raises(Exception):
         utilty = au.algorithmUtility()
@@ -97,9 +154,18 @@ def test_calculateNodeCosts():
     assert diff_distance == -2
     assert other_distance == 2
 
-def test_calculateFinalElevation_input_validation():
+def test_calculateFinalElevation_input_validation_None():
     graph = None
     type = None
+    path = [3271341845, 3271341826, 66699873, 3271341805]
+    
+    with pytest.raises(Exception):
+        utilty = au.algorithmUtility()
+        utilty.calculateFinalElevation(graph, path, type)
+
+def test_calculateFinalElevation_input_validation_Empty():
+    graph = ''
+    type = ''
     path = [3271341845, 3271341826, 66699873, 3271341805]
     
     with pytest.raises(Exception):
@@ -120,6 +186,31 @@ def test_calculateFinalElevation():
     assert elevation_gain == 0
     assert elevation_drop == 2
     assert other == 0
+
+def test_backtrack_None():
+    currNode = None
+    parent = None
+
+    with pytest.raises(Exception):
+        utilty = au.algorithmUtility()
+        utilty.backtrack(currNode, parent)
+
+def test_backtrack_Empty():
+    currNode = ''
+    parent = ''
+
+    with pytest.raises(Exception):
+        utilty = au.algorithmUtility()
+        utilty.backtrack(currNode, parent)
+
+def test_backtrack():
+    currNode = 1
+    parent = {1:2, 2:3, 3:4}
+
+    utilty = au.algorithmUtility()
+    path = utilty.backtrack(currNode, parent)
+
+    assert path == [4,3,2,1]
 
 def test_shortest_same_location():
     map = Map()

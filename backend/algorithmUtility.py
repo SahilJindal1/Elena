@@ -10,7 +10,9 @@ class algorithmUtility:
         # theta = lat, phi = long
 
         if (src and dest) is None:
-            raise Exception("None type values not provided in calculateDistanceUsingCoords function")
+            raise Exception("None type values provided in calculateDistanceUsingCoords function")
+        elif (src and dest) == '':
+            raise Exception("Empty values provided in calculateDistanceUsingCoords function")
 
         R = 6371000
         srcLat, srcLong = np.radians(src[0]), np.radians(src[1])
@@ -24,9 +26,25 @@ class algorithmUtility:
         dist = 2 * R * np.arcsin(val)
         return dist
 
+    def backtrack(self, currNode, parent):
+        if currNode and parent is None:
+            raise Exception("None type parameters in backtrack")
+        elif (currNode and parent) == '':
+            raise Exception("Empty parameters in backtrack")
+
+        path = [currNode]
+
+        while currNode in parent:
+            currNode = parent[currNode]
+            path.append(currNode)
+
+        return path[::-1]
+
     def calculateNodeCosts(self, graph, node1, node2, type):
         if (graph and node1 and node2 and type) is None:
-            raise Exception("None type values not provided in calculateNodeCosts")
+            raise Exception("None type values provided in calculateNodeCosts")
+        elif (graph and node1 and node2 and type) == '':
+            raise Exception("Empty values provided in calculateNodeCosts")
 
         if type == 'normal':
             try : 
@@ -44,8 +62,10 @@ class algorithmUtility:
 
     def calculateFinalElevation(self, graph, path, type):
         if (graph and path and type) is None:
-            raise Exception("None type values not provided in calculateFinalElevation")
-
+            raise Exception("None type values provided in calculateFinalElevation")
+        elif (graph and path and type) == '':
+            raise Exception("Empty values provided in calculateFinalElevation")
+            
         total = 0
         i = 0
         while i < len(path) - 1:

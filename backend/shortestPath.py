@@ -6,6 +6,8 @@ class shortestPath:
     def __init__(self, graph, src, dest) -> None:
         if (graph and src and dest) is None:
             raise Exception("None type Parameters in shortest Path")
+        elif (graph and src and dest) == '':
+            raise Exception("Empty Parameters in shortest Path")
         else:
             self.graph = graph
             self.src = src
@@ -15,6 +17,8 @@ class shortestPath:
             self.utilities = au.algorithmUtility()
 
     def run(self):
+        if (self.srcNode and self.destNode) is None:
+            raise Exception("Not Valid Nodes")
         path = nx.shortest_path(self.graph, source = self.srcNode, target = self.destNode, weight='length')
         pathLengths = ox.utils_graph.get_route_edge_attributes(self.graph, path, 'length')
         distance = sum(pathLengths)
