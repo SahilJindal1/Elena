@@ -62,6 +62,22 @@
     border-radius: 4px;
 }
 
+.resetButton {
+    width: 150px;
+    margin: 20px 0 0 0;
+    height: 30px;
+    background-color: #23374be6;
+    border: none;
+    color: #f2f8fb;
+    font-family: sans-serif;
+    font-weight: bold; 
+    /* align-items: center; */
+    margin: 30px;
+    align-self: center;
+    cursor:pointer;
+    border-radius: 4px;
+}
+
 .validationText{
     color: black;
     font-size: smaller;

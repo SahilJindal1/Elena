@@ -1,10 +1,11 @@
 import React from 'react';
 import { Form, Button } from 'semantic-ui-react';
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { useState } from 'react';
 import "./InputView.css";
 import findRoute from "../controller/APIs"
-import {src, dest} from './MapboxView';
+import {src, dest, ResetMap} from './MapboxView';
+import {ResetTableView} from './AlgorithmTableView';
 
 export default function InputView({setMyData}) {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -49,6 +50,12 @@ export default function InputView({setMyData}) {
         setInputs(values => ({...values, [name]: value}))
     }
 
+    const onReset = () => {
+        console.log("resetting");
+        ResetTableView();
+        ResetMap();
+    }
+
     return (
         <div>
             <Form onSubmit={handleSubmit(onSubmit)} className="inputView">
@@ -91,6 +98,7 @@ export default function InputView({setMyData}) {
                 </Form.Field>
                 {errors.distanceLimit && <p className='validationText'>Enter the Max. Distance Limit</p>}
                 <Button type='submit' className='routeButton'>Find Route</Button>
+                <Button type='reset' className='resetButton' onClick={onReset}>Reset</Button>
                 <p className='validationText' id="locationError"></p>
             </Form>
         </div>

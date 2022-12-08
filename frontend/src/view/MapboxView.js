@@ -219,4 +219,11 @@ export function DisplayRoute(response) {
     });
 }
 
+
+export function ResetMap() {
+    console.log("resetting map");
+    map.current.triggerRepaint();
+}
+
+
 export {src, dest};
