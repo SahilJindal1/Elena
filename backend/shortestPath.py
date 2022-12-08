@@ -5,7 +5,7 @@ import algorithmUtility as au
 class shortestPath:
     def __init__(self, graph, src, dest) -> None:
         if (graph and src and dest) is None:
-            raise Exception("Missing Parameters in shortest Path")
+            raise Exception("None type Parameters in shortest Path")
         else:
             self.graph = graph
             self.src = src

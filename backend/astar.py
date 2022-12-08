@@ -5,7 +5,7 @@ import algorithmUtility as au
 class astar:
     def __init__(self, graph, src, dest, limit, isMaximum, shortestDistance) -> None:
         if graph and src and dest and limit and isMaximum and shortestDistance is None:
-            raise Exception("Missing Parameters in A*")
+            raise Exception("None type Parameters in A*")
         else:
             self.graph = graph
             self.src = src
@@ -31,7 +31,7 @@ class astar:
 
     def backtrack(self, currNode, parent):
         if currNode and parent is None:
-            raise Exception("Missing parameters in backtrack")
+            raise Exception("None type parameters in backtrack")
         path = [currNode]
 
         while currNode in parent:

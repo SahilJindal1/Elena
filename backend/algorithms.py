@@ -10,7 +10,7 @@ from map_lib import Map
 class algorithms:
     def __init__(self, startLatitude, startLongitude, endLatitude, endLongitude, elevationType, distanceLimit) -> None:
         if (startLatitude and startLongitude and endLatitude and endLongitude and elevationType and distanceLimit) is None:
-            raise Exception("Missing Parameters in Algorithms")
+            raise Exception("None type Parameters in Algorithms")
 
         else:
             amherstCoordinates = tuple((42.37444161675649, -72.51956880913377))
@@ -56,6 +56,7 @@ class algorithms:
 #     dest = tuple((42.351556, -72.527381))
 #     alg = algorithms(src[0], src[1], dest[0], dest[1], 'minimum', 125)
 #     values = alg.run()
+
 #     print(len(values['shortest_path']['path']), values['shortest_path']['distance'], values['shortest_path']['elevation_gain'])
 #     print(len(values['dijkstra']['path']), values['dijkstra']['distance'], values['dijkstra']['elevation_gain'])
 #     print(len(values['a_star']['path']), values['a_star']['distance'], values['a_star']['elevation_gain'])
