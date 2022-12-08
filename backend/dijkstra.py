@@ -53,6 +53,7 @@ class dijkstra:
                         point = self.graph.nodes[node]
                         latLongPath.append((point['x'], point['y']))
                     
+                    print("Here's the path",path)
                     values['path'] = latLongPath
                     values['distance'] = distance
                     values['elevation_gain'] = finalGain
@@ -79,5 +80,5 @@ class dijkstra:
                         parentDict[neighbor] = currNode
                         minimum_distances[neighbor] = nextDiff
                         heapq.heappush(q,(nextDiff,nextDist,neighbor))
-
+        print("no path")
         
