@@ -9,9 +9,13 @@ let map = null;
 
 let src = null;
 let dest = null;
+var srcMarker;
+var destMarker;
+var srcMapboxGeocoder;
+var destMapboxGeocoder;
 
-export default function MapboxView({response}) {
-    console.log("Rerender")
+export default function MapboxView() {
+
     const mapContainer = useRef(null);
     map = useRef(null);
     //var marker = new mapboxgl.Marker();
@@ -19,7 +23,7 @@ export default function MapboxView({response}) {
     const [lat, setLat] = useState(42.37314021836991);
     const [zoom, setZoom] = useState(12);
 
-    const srcMapboxGeocoder = new MapboxGeocoder({
+    srcMapboxGeocoder = useRef(new MapboxGeocoder({
         // Initialize the geocoder
         accessToken: mapboxgl.accessToken, // Set the access token
         mapboxgl: mapboxgl, // Set the mapbox-gl instance
@@ -29,9 +33,9 @@ export default function MapboxView({response}) {
             longitude: -72.50187402113794,
             latitude: 42.37314021836991
         }
-      });
+      }));
 
-    const destMapboxGeocoder = new MapboxGeocoder({
+    destMapboxGeocoder = useRef(new MapboxGeocoder({
         // Initialize the geocoder
         accessToken: mapboxgl.accessToken, // Set the access token
         mapboxgl: mapboxgl, // Set the mapbox-gl instance
@@ -41,13 +45,13 @@ export default function MapboxView({response}) {
             longitude: -72.50187402113794,
             latitude: 42.37314021836991
         }
-    });
+    }));
 
-    var srcMarker = new mapboxgl.Marker({color: "#005db2"});
-    srcMarker.setLngLat([-72.5018, 42.3731]);
+    srcMarker = useRef(new mapboxgl.Marker({color: "#005db2"}));
+    //srcMarker.current.setLngLat([-72.5018, 42.3731]);
 
-    var destMarker = new mapboxgl.Marker({color: "#dc143c"});
-    destMarker.setLngLat([-72.5018, 42.3731]);
+    destMarker = useRef(new mapboxgl.Marker({color: "#dc143c"}));
+    //destMarker.current.setLngLat([-72.5018, 42.3731]);
 
     useEffect(() => {
     if (map.current) return; // initialize map only once
@@ -58,31 +62,30 @@ export default function MapboxView({response}) {
         zoom: 13
     });
     
-    map.current.addControl(srcMapboxGeocoder, 'top-left');
-    map.current.addControl(destMapboxGeocoder, 'top-left');
+    map.current.addControl(srcMapboxGeocoder.current, 'top-left');
+    map.current.addControl(destMapboxGeocoder.current, 'top-left');
     map.current.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
     });
 
     useEffect(() => {
         if (!map.current) return;
-        srcMapboxGeocoder.on('result', (event) => {
-            console.log("src", event.result);
-            srcMarker.setLngLat(event.result.geometry.coordinates).addTo(map.current);
+        srcMapboxGeocoder.current.on('result', (event) => {
+            //console.log("src", event.result);
+            srcMarker.current.setLngLat(event.result.geometry.coordinates).addTo(map.current);
             var bounds = new mapboxgl.LngLatBounds();
             src = event.result.geometry.coordinates;
-            bounds.extend(srcMarker.getLngLat());
-            bounds.extend(destMarker.getLngLat());
-            map.current.fitBounds(bounds, {padding: 100});          
+            bounds.extend(srcMarker.current.getLngLat());
+            bounds.extend(destMarker.current.getLngLat());
+            map.current.fitBounds(bounds, {padding: 100});   
           });
 
-        destMapboxGeocoder.on('result', (event) => {
-            console.log("dest", event.result);
-            destMarker.setLngLat(event.result.geometry.coordinates).addTo(map.current);
+        destMapboxGeocoder.current.on('result', (event) => {
+            //console.log("dest", event.result);
+            destMarker.current.setLngLat(event.result.geometry.coordinates).addTo(map.current);
             var bounds = new mapboxgl.LngLatBounds();
             dest = event.result.geometry.coordinates;
-            bounds.extend(srcMarker.getLngLat());
-            bounds.extend(destMarker.getLngLat());
-            map.current.fitBounds(bounds, {padding: 100});
+            bounds.extend(srcMarker.current.getLngLat());
+            bounds.extend(destMarker.current.getLngLat());
             map.current.fitBounds(bounds, {padding: 100});
         });
     })
@@ -101,11 +104,6 @@ export default function MapboxView({response}) {
 
     });
 
-    if (response !== undefined)
-    {
-        DisplayRoute(response)
-    }
-
     return (
         
         <div className="mapView">
@@ -114,7 +112,7 @@ export default function MapboxView({response}) {
             </div>
             <div ref={mapContainer} className="map-container" />
         </div>
-    );
+        );
 }
 
 export function DisplayRoute(response) {
@@ -123,17 +121,16 @@ export function DisplayRoute(response) {
     //     //error
     //     return ""
     // }
-    console.log("Layers", map.current.getStyle().layers)
     try{
-        
         map.current.removeLayer("dijkstra-elevation-path-layer");
         map.current.removeSource("dijkstra-elevation-path");
         map.current.removeLayer("astar-elevation-path-layer");
         map.current.removeSource("astar-elevation-path");
         map.current.removeLayer("shortest-path-layer");
         map.current.removeSource("shortest-path");
-    } catch {
-        console.log("First time kid")
+    }
+    catch{
+        console.log("Error handled! No layers in first search");
     }
     console.log("here")
     map.current.addSource('dijkstra-elevation-path', {
@@ -146,7 +143,6 @@ export function DisplayRoute(response) {
                 "geometry": {
                     "type": "LineString",
                     coordinates: response['dijkstra']['path']
-                    //"coordinates": [[-72.527381,42.351556],[-72.5260337,42.3515867],[-72.525857,42.351601],[-72.5257443,42.3516113],[-72.525012,42.351708],[-72.524353,42.351839],[-72.5221039,42.3541171],[-72.522022,42.354221],[-72.521744,42.3545731],[-72.5210113,42.3556561],[-72.5210566,42.3557675],[-72.5210408,42.3558147],[-72.5210161,42.3574905],[-72.5210083,42.3577576],[-72.5209888,42.3581485],[-72.5209708,42.3595563],[-72.5209696,42.3596156],[-72.5208019,42.3597326],[-72.520781,42.360697],[-72.520759,42.361988],[-72.520755,42.3626454],[-72.520754,42.362842],[-72.5207438,42.3632958],[-72.5205837,42.3647228],[-72.520462,42.365412],[-72.5201978,42.3671126],[-72.520181,42.36722],[-72.520172,42.367305],[-72.520053,42.368243],[-72.5198031,42.3682258],[-72.51919,42.369324],[-72.5190928,42.3700293],[-72.5171844,42.3702692],[-72.5175854,42.3706976],[-72.5175895,42.3710233]]}
             }}]
         }
     });
@@ -177,7 +173,6 @@ export function DisplayRoute(response) {
                 "geometry": {
                     "type": "LineString",
                     coordinates: response['a_star']['path']
-                    //"coordinates": [[-72.527381,42.351556],[-72.5260337,42.3515867],[-72.5260404,42.3516593],[-72.5257548,42.3516821],[-72.5222176,42.3541703],[-72.522159,42.3542445],[-72.521744,42.3545731],[-72.5210113,42.3556561],[-72.5210566,42.3557675],[-72.5210408,42.3558147],[-72.5210161,42.3574905],[-72.5210083,42.3577576],[-72.5209888,42.3581485],[-72.5209708,42.3595563],[-72.5209696,42.3596156],[-72.5209524,42.3606794],[-72.5208856,42.3619662],[-72.520866,42.36264],[-72.5209103,42.3628323],[-72.5208976,42.3632934],[-72.5207342,42.3646983],[-72.5206533,42.3653703],[-72.520423,42.367325],[-72.5203196,42.368261],[-72.520139,42.3697067],[-72.5200246,42.370616],[-72.5198187,42.3705396],[-72.5187117,42.3708474],[-72.5186133,42.3708495],[-72.5175019,42.3703036],[-72.5175854,42.3706976],[-72.5175895,42.3710233]]}
             }}]
         }
     });
@@ -207,7 +202,6 @@ export function DisplayRoute(response) {
                 "geometry": {
                     "type": "LineString",
                     coordinates: response['shortest_path']['path']
-                    //"coordinates": [[-72.527381, 41.351556],[-72.5260337, 41.3515867],[-72.525857, 41.351601]]}
             }}]
         }
     });
@@ -231,7 +225,21 @@ export function DisplayRoute(response) {
 
 export function ResetMap() {
     console.log("resetting map");
-    map.current.triggerRepaint();
+    try{
+        srcMapboxGeocoder.current.clear();
+        srcMarker.current.remove();
+        destMapboxGeocoder.current.clear();
+        destMarker.current.remove();
+        map.current.removeLayer("dijkstra-elevation-path-layer");
+        map.current.removeSource("dijkstra-elevation-path");
+        map.current.removeLayer("astar-elevation-path-layer");
+        map.current.removeSource("astar-elevation-path");
+        map.current.removeLayer("shortest-path-layer");
+        map.current.removeSource("shortest-path");
+    }
+    catch(e) {
+        console.log("Error handled! Layer is not added yet :)")
+    }
 }
 
 
