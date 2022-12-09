@@ -3,29 +3,50 @@ import algorithmUtility as au
 from collections import defaultdict
 import heapq
 
+"""
+This class executes the Dijsktra algorithm.
+"""
 class dijkstra:
+    """
+    This function initializes the dijkstra class with the given parameters.
 
+    @param graph A graph containing all node values for the location
+    @param src A tuple representing the source location latitude and longitude
+    @param dest A tuple representing the destination location latitude and longitude
+    @param limit A number representing the maximum distance limit percentage
+    @param isMaximum A boolean representing if the elevation gain type is maximum
+    @param shortestDistance A number representing the shortest path distance
+
+    @exception If the given parameters are of None type
+    @exception If the given parameters are empty strings
+    """
     def __init__(self,graph,src,dest,limit,isMaximum,shortestDistance) -> None:
-        self.graph = graph
-        self.src = src
-        self.dest = dest
-        self.srcNode, self.srcDistance = ox.distance.nearest_nodes(self.graph, X = self.src[1], Y=self.src[0], return_dist = True)
-        self.destNode, self.destDistance = ox.distance.nearest_nodes(self.graph, X = self.dest[1], Y=self.dest[0], return_dist = True)
-        self.utilities = au.algorithmUtility()
-        self.shortestDistance = shortestDistance
-        self.isMaximum = isMaximum
-        self.limit = limit
+        if graph and src and dest and limit and isMaximum and shortestDistance is None:
+            raise Exception("None type Parameters in Dijkstra")
+        elif (graph and src and dest and limit and isMaximum and shortestDistance) == '':
+            raise Exception("Empty Parameters in Dijkstra")
+        else:
+            self.graph = graph
+            self.src = src
+            self.dest = dest
+            self.srcNode, self.srcDistance = ox.distance.nearest_nodes(self.graph, X = self.src[1], Y=self.src[0], return_dist = True)
+            self.destNode, self.destDistance = ox.distance.nearest_nodes(self.graph, X = self.dest[1], Y=self.dest[0], return_dist = True)
+            self.utilities = au.algorithmUtility()
+            self.shortestDistance = shortestDistance
+            self.isMaximum = isMaximum
+            self.limit = limit
     
-    def backtrack(self, currNode, parent):
-        path = [currNode]
+    """
+    This function runs this specific Dijkstra algorithm.
 
-        while currNode in parent:
-            currNode = parent[currNode]
-            path.append(currNode)
+    @exception If the calculates source and destionation nodes are not valid
 
-        return path[::-1]
-
+    @return A dictionary of values having path, distance and elevation gain for Dijkstra
+    """
     def run(self):
+        if (self.srcNode and self.destNode) is None:
+            raise Exception("Not Valid Nodes")
+
         q = [(0.0, 0.0, self.srcNode)]
         visitedNodes = set()
         minimum_distances = {self.srcNode:0}
@@ -37,7 +58,7 @@ class dijkstra:
             if currNode not in visitedNodes:
                 visitedNodes.add(currNode)
                 if currNode == self.destNode:
-                    path = self.backtrack(currNode,parentDict)
+                    path = self.utilities.backtrack(currNode,parentDict)
                     finalGain, finalDrop = self.utilities.calculateFinalElevation(self.graph,path,'elevation-gain'),self.utilities.calculateFinalElevation(self.graph,path,'elevation-drop')
                     pathLengths = ox.utils_graph.get_route_edge_attributes(self.graph, path, 'length')
                     distance = sum(pathLengths)
@@ -48,6 +69,7 @@ class dijkstra:
                         point = self.graph.nodes[node]
                         latLongPath.append((point['x'], point['y']))
                     
+                    print("Here's the path",path)
                     values['path'] = latLongPath
                     values['distance'] = distance
                     values['elevation_gain'] = finalGain
@@ -74,5 +96,5 @@ class dijkstra:
                         parentDict[neighbor] = currNode
                         minimum_distances[neighbor] = nextDiff
                         heapq.heappush(q,(nextDiff,nextDist,neighbor))
-
+        print("no path")
         
