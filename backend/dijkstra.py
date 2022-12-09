@@ -3,8 +3,23 @@ import algorithmUtility as au
 from collections import defaultdict
 import heapq
 
+"""
+This class executes the Dijsktra algorithm.
+"""
 class dijkstra:
+    """
+    This function initializes the dijkstra class with the given parameters.
 
+    @param graph A graph containing all node values for the location
+    @param src A tuple representing the source location latitude and longitude
+    @param dest A tuple representing the destination location latitude and longitude
+    @param limit A number representing the maximum distance limit percentage
+    @param isMaximum A boolean representing if the elevation gain type is maximum
+    @param shortestDistance A number representing the shortest path distance
+
+    @exception If the given parameters are of None type
+    @exception If the given parameters are empty strings
+    """
     def __init__(self,graph,src,dest,limit,isMaximum,shortestDistance) -> None:
         if graph and src and dest and limit and isMaximum and shortestDistance is None:
             raise Exception("None type Parameters in Dijkstra")
@@ -21,10 +36,17 @@ class dijkstra:
             self.isMaximum = isMaximum
             self.limit = limit
     
+    """
+    This function runs this specific Dijkstra algorithm.
+
+    @exception If the calculates source and destionation nodes are not valid
+
+    @return A dictionary of values having path, distance and elevation gain for Dijkstra
+    """
     def run(self):
         if (self.srcNode and self.destNode) is None:
             raise Exception("Not Valid Nodes")
-            
+
         q = [(0.0, 0.0, self.srcNode)]
         visitedNodes = set()
         minimum_distances = {self.srcNode:0}

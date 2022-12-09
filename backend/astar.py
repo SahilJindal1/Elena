@@ -2,7 +2,23 @@ import osmnx as ox
 
 import algorithmUtility as au
 
+"""
+This class executes the A* algorithm.
+"""
 class astar:
+    """
+    This function initializes the astar class with the given parameters.
+
+    @param graph A graph containing all node values for the location
+    @param src A tuple representing the source location latitude and longitude
+    @param dest A tuple representing the destination location latitude and longitude
+    @param limit A number representing the maximum distance limit percentage
+    @param isMaximum A boolean representing if the elevation gain type is maximum
+    @param shortestDistance A number representing the shortest path distance
+
+    @exception If the given parameters are of None type
+    @exception If the given parameters are empty strings
+    """
     def __init__(self, graph, src, dest, limit, isMaximum, shortestDistance) -> None:
         if graph and src and dest and limit and isMaximum and shortestDistance is None:
             raise Exception("None type Parameters in A*")
@@ -20,6 +36,12 @@ class astar:
             self.shortestDistance = shortestDistance
             self.utilities = au.algorithmUtility()
 
+    """
+    This function calculates the heuristics 'h' for the algorithm.
+    Here, the heuristics is basically the direct distance between the node and destination.
+
+    @return A dictionary of heuristic values for all nodes
+    """
     def calculateNodeHeuristics(self):
         destination = self.graph.nodes[self.destNode]
         destCoords = destination['y'], destination['x']
@@ -31,6 +53,13 @@ class astar:
 
         return heuristics
 
+    """
+    This function runs this specific A* algorithm.
+
+    @exception If the calculates source and destionation nodes are not valid
+
+    @return A dictionary of values having path, distance and elevation gain for A*
+    """
     def run(self):
         if (self.srcNode and self.destNode) is None:
             raise Exception("Not Valid Nodes")

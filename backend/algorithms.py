@@ -7,7 +7,23 @@ import dijkstra as dj
 
 from map_lib import Map
 
+"""
+This class calls all the three algorithms to get their path, distance and elevation values.
+"""
 class algorithms:
+    """
+    This function initializes the algorithms class with the given parameters.
+
+    @param startLatitude A decimal representing source location latitude
+    @param startLongitude A decimal representing source location longitude
+    @param endLatitude A decimal representing destination location latitude
+    @param endLongitude A decimal representing destination location longitude
+    @param elevationType A string representing the elevation type
+    @param distanceLimit A number representing the maximum distance limit percentage
+
+    @exception If the given parameters are of None type
+    @exception If the given parameters are empty strings
+    """
     def __init__(self, startLatitude, startLongitude, endLatitude, endLongitude, elevationType, distanceLimit) -> None:
         if (startLatitude and startLongitude and endLatitude and endLongitude and elevationType and distanceLimit) is None:
             raise Exception("None type Parameters in Algorithms")
@@ -26,10 +42,17 @@ class algorithms:
             self.destNode, self.destDistance = ox.distance.nearest_nodes(self.graph, X = self.dest[1], Y=self.dest[0], return_dist = True)
             print(self.graph.nodes[self.srcNode], self.graph.nodes[self.destNode])
 
+    """
+    This function runs all the algorithms.
+
+    @exception If the calculates source and destionation nodes are not valid
+
+    @return A dictionary of values having path, distance and elevation gain for shortest-path, dijkstra and a*
+    """
     def run(self):
         if (self.srcNode and self.destNode) is None:
             raise Exception("Not Valid Nodes")
-            
+
         algorithmValues = {}
         shortestPathAlgorithm = sh.shortestPath(self.graph, self.src, self.dest)
         algorithmValues['shortest_path'] = shortestPathAlgorithm.run()

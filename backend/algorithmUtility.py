@@ -3,7 +3,21 @@ import math
 # import osmnx as ox
 # from map_lib import Map
 
+"""
+This class contains the utility functions common to executing the algorithms.
+"""
 class algorithmUtility:
+    """
+    This function calculates the direct distance between the given source and destination coordinates.
+
+    @param src A tuple representing the source location latitude and longitude
+    @param dest A tuple representing the destination location latitude and longitude
+
+    @exception If the given parameters are of None type
+    @exception If the given parameters are empty strings
+
+    @return A number representing the distance value between the coordinates
+    """
     def calculateDistanceUsingCoords(self, src, dest):
         # R = 6371 kms
         # distance = 2R⋅sin⁻¹(√[sin²((θ₂ - θ₁)/2) + cosθ₁⋅cosθ₂⋅sin²((φ₂ - φ₁)/2)])
@@ -26,6 +40,17 @@ class algorithmUtility:
         dist = 2 * R * np.arcsin(val)
         return dist
 
+    """
+    This function backtracks the path from current node using the parent dictionary.
+
+    @param currNode A number repsenting a valid node from graph
+    @param parent A dictionary containing parents for nodes in the graph
+
+    @exception If the given parameters are of None type
+    @exception If the given parameters are empty strings
+
+    @return An array containing the path to currNode
+    """
     def backtrack(self, currNode, parent):
         if currNode and parent is None:
             raise Exception("None type parameters in backtrack")
@@ -40,6 +65,19 @@ class algorithmUtility:
 
         return path[::-1]
 
+    """
+    This function calculates the cost between two given nodes from the graph.
+
+    @param graph A graph containing all node values for the location
+    @param node1 A number repsenting a valid node from graph
+    @param node2 A number repsenting a valid node from graph
+    @param type The type of node cost to calculate
+
+    @exception If the given parameters are of None type
+    @exception If the given parameters are empty strings
+
+    @return A number representing the cost
+    """
     def calculateNodeCosts(self, graph, node1, node2, type):
         if (graph and node1 and node2 and type) is None:
             raise Exception("None type values provided in calculateNodeCosts")
@@ -60,12 +98,24 @@ class algorithmUtility:
         else:
             return abs(graph.nodes[node1]["elevation"]-graph.nodes[node2]["elevation"])
 
+    """
+    This function calculates the total elevation value between two given nodes from the graph.
+
+    @param graph A graph containing all node values for the location
+    @param path An array of nodes representing the path
+    @param type The type of elevation value to calculate
+
+    @exception If the given parameters are of None type
+    @exception If the given parameters are empty strings
+
+    @return A number representing the total elevation type value for path
+    """
     def calculateFinalElevation(self, graph, path, type):
         if (graph and path and type) is None:
             raise Exception("None type values provided in calculateFinalElevation")
         elif (graph and path and type) == '':
             raise Exception("Empty values provided in calculateFinalElevation")
-            
+
         total = 0
         i = 0
         while i < len(path) - 1:
