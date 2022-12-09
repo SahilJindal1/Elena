@@ -64,15 +64,14 @@
 
 .resetButton {
     width: 150px;
-    margin: 20px 0 0 0;
+    margin: 1px 0 10px 0;
     height: 30px;
-    background-color: #23374be6;
+    background-color: #ab1c1ce6;
     border: none;
     color: #f2f8fb;
     font-family: sans-serif;
     font-weight: bold; 
     /* align-items: center; */
-    margin: 30px;
     align-self: center;
     cursor:pointer;
     border-radius: 4px;
