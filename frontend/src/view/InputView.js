@@ -8,6 +8,13 @@ import {src, dest, ResetMap} from './MapboxView';
 import {ResetTableView} from './AlgorithmTableView';
 
 export default function InputView({setMyData}) {
+    const loader = document.querySelector('.loader');
+
+    // if you want to show the loader when React loads data again
+    const showLoader = () => loader.classList.remove('loader--hide');
+
+    const hideLoader = () => loader.classList.add('loader--hide');
+
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const [inputs, setInputs] = useState({});
@@ -19,11 +26,13 @@ export default function InputView({setMyData}) {
         msgdisplay.innerHTML= "Enter a start and end location";
     }
     const onSubmit = async(data)=> {
+        showLoader();
         console.log(data);
         console.log("src");
         console.log(src, dest);
         if(src==null || dest==null){
             console.log("In the errorr ")
+            hideLoader();
             validateLocation();
         }
         try {
@@ -36,11 +45,17 @@ export default function InputView({setMyData}) {
                 "distance_limit": data.distanceLimit         
             }
             console.log(send_data);
-            const path = await findRoute(JSON.stringify(send_data)) //Sends the data to the controller 
+            const path = await findRoute(JSON.stringify(send_data)).catch(err => {
+                console.log("An error occurent in finding route");
+            }).finally(() => {
+                hideLoader();
+                console.log("finally");
+            }) //Sends the data to the controller 
             console.log(path)
             setThisData(path)
         } catch(e) {
             console.log(e);
+            hideLoader();
             console.log('Missing values');
         } 
     }
@@ -52,13 +67,16 @@ export default function InputView({setMyData}) {
 
     const onReset = () => {
         console.log("resetting");
+        setInputs({})
         setMyData(undefined)
         ResetMap();
+        console.log("Here's the inputs",inputs)
     }
 
     return (
-        <div>
-            <Form onSubmit={handleSubmit(onSubmit)} className="inputView">
+        <div className="inputView">
+            <div className='loader loader--hide'></div>
+            <Form onSubmit={handleSubmit(onSubmit)} className="inputTable">
                 <Form.Field className="formFields">
                 <p className="label">Elevation Gain:</p>
                 <div className='field'>
@@ -69,6 +87,7 @@ export default function InputView({setMyData}) {
                             type="radio"
                             value="Minimum"
                             id="field-Minimum"
+                            className="input-values"
                             onChange={handleChange}
                         />
                         Minimize
@@ -79,6 +98,7 @@ export default function InputView({setMyData}) {
                             type="radio"
                             value="Maximum"
                             id="field-Maximum"
+                            className="input-values"
                             onChange={handleChange}
                         />
                         Maximize
@@ -91,7 +111,7 @@ export default function InputView({setMyData}) {
                     <input
                         placeholder='%'
                         type="number"
-                        className = "field text-input"
+                        className = "field text-input input-values"
                         onChange={handleChange}
                         {...register("distanceLimit", { required: true, maxLength: 10 })}
                     />
