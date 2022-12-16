@@ -22,7 +22,7 @@ export default function MapboxView() {
     const [lng, setLng] = useState(-72.50187402113794);
     const [lat, setLat] = useState(42.37314021836991);
     const [zoom, setZoom] = useState(12);
-
+    const bounds = [-72.577934, 42.285930,  -72.455105, 42.443616];
     srcMapboxGeocoder = useRef(new MapboxGeocoder({
         // Initialize the geocoder
         accessToken: mapboxgl.accessToken, // Set the access token
@@ -32,7 +32,8 @@ export default function MapboxView() {
         proximity: {
             longitude: -72.50187402113794,
             latitude: 42.37314021836991
-        }
+        },
+        bbox: bounds
       }));
 
     destMapboxGeocoder = useRef(new MapboxGeocoder({
@@ -44,7 +45,8 @@ export default function MapboxView() {
         proximity: {
             longitude: -72.50187402113794,
             latitude: 42.37314021836991
-        }
+        },
+        bbox: bounds
     }));
 
     srcMarker = useRef(new mapboxgl.Marker({color: "#005db2"}));
