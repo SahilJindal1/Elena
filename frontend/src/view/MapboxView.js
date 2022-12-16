@@ -22,7 +22,7 @@ export default function MapboxView() {
     const [lng, setLng] = useState(-72.50187402113794);
     const [lat, setLat] = useState(42.37314021836991);
     const [zoom, setZoom] = useState(12);
-    const bounds = [-72.577934, 42.285930,  -72.455105, 42.443616];
+    const boundsAmherst = [-72.577934, 42.285930,  -72.455105, 42.443616];
     srcMapboxGeocoder = useRef(new MapboxGeocoder({
         // Initialize the geocoder
         accessToken: mapboxgl.accessToken, // Set the access token
@@ -33,7 +33,7 @@ export default function MapboxView() {
             longitude: -72.50187402113794,
             latitude: 42.37314021836991
         },
-        bbox: bounds
+        bbox: boundsAmherst
       }));
 
     destMapboxGeocoder = useRef(new MapboxGeocoder({
@@ -46,7 +46,7 @@ export default function MapboxView() {
             longitude: -72.50187402113794,
             latitude: 42.37314021836991
         },
-        bbox: bounds
+        bbox: boundsAmherst
     }));
 
     srcMarker = useRef(new mapboxgl.Marker({color: "#005db2"}));
@@ -113,6 +113,7 @@ export default function MapboxView() {
                 Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
             </div>
             <div ref={mapContainer} className="map-container" />
+            <div class="map-overlay" id="legend"></div>
         </div>
         );
 }
@@ -221,6 +222,25 @@ export function DisplayRoute(response) {
             'line-color': '#253AAF',
             'line-width': 5
         }
+    });
+
+    const layers = ['dijkstra-elevation-path-layer', 'astar-elevation-path-layer', 'shortest-path-layer'];
+    const layerColors = ['#AFA925', '#55AF25', '#253AAF'];
+    const legend = document.getElementById('legend');
+    const legendNames = ['Dijkstra', 'A*', 'Shortest Path']
+
+    layers.forEach((layer, i) => {
+        const color = layerColors[i];
+        const item = document.createElement('div');
+        const key = document.createElement('span');
+        key.className = 'legend-key';
+        key.style.backgroundColor = color;
+        
+        const value = document.createElement('span');
+        value.innerHTML = legendNames[i];
+        item.appendChild(key);
+        item.appendChild(value);
+        legend.appendChild(item);
     });
 }
 
