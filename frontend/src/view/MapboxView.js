@@ -67,6 +67,23 @@ export default function MapboxView() {
     map.current.addControl(srcMapboxGeocoder.current, 'top-left');
     map.current.addControl(destMapboxGeocoder.current, 'top-left');
     map.current.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+    const layerColors = ['#AFA925', '#55AF25', '#253AAF'];
+    const legend = document.getElementById('legend');
+    const legendNames = ['Dijkstra', 'A*', 'Shortest Path']
+
+    legendNames.forEach((legendName, i) => {
+        const color = layerColors[i];
+        const item = document.createElement('div');
+        const key = document.createElement('span');
+        key.className = 'legend-key';
+        key.style.backgroundColor = color;
+        
+        const value = document.createElement('span');
+        value.innerHTML = legendName;
+        item.appendChild(key);
+        item.appendChild(value);
+        legend.appendChild(item);
+    });
     });
 
     useEffect(() => {
@@ -222,25 +239,6 @@ export function DisplayRoute(response) {
             'line-color': '#253AAF',
             'line-width': 5
         }
-    });
-
-    const layers = ['dijkstra-elevation-path-layer', 'astar-elevation-path-layer', 'shortest-path-layer'];
-    const layerColors = ['#AFA925', '#55AF25', '#253AAF'];
-    const legend = document.getElementById('legend');
-    const legendNames = ['Dijkstra', 'A*', 'Shortest Path']
-
-    layers.forEach((layer, i) => {
-        const color = layerColors[i];
-        const item = document.createElement('div');
-        const key = document.createElement('span');
-        key.className = 'legend-key';
-        key.style.backgroundColor = color;
-        
-        const value = document.createElement('span');
-        value.innerHTML = legendNames[i];
-        item.appendChild(key);
-        item.appendChild(value);
-        legend.appendChild(item);
     });
 }
 
