@@ -124,7 +124,7 @@ export default function InputView({setMyData}) {
                         type="number"
                         className = "field text-input input-values"
                         onChange={handleChange}
-                        {...register("distanceLimit", { required: true, maxLength: 10, min:100 })}
+                        {...register("distanceLimit", { required: true, maxLength: 10, min:100, max:200 })}
                     />
                 </Form.Field>
                 {errors.distanceLimit && <p className='validationText'>Enter Valid Max. Distance Limit</p>}
