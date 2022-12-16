@@ -21,9 +21,15 @@ export default function InputView({setMyData}) {
     const setThisData = (path) => {
         setMyData(path)
     }
-    const validateLocation = () =>{
+    const validateLocation = (check) =>{
         const msgdisplay = document.getElementById("locationError");
-        msgdisplay.innerHTML= "Enter a start and end location";
+        if(check == true){
+            msgdisplay.innerHTML= "Enter a start and end location";
+        }
+        else{
+            msgdisplay.innerHTML= "";         
+        }
+
     }
     const onSubmit = async(data)=> {
         showLoader();
@@ -33,31 +39,36 @@ export default function InputView({setMyData}) {
         if(src==null || dest==null){
             console.log("In the errorr ")
             hideLoader();
-            validateLocation();
+            validateLocation(true);
         }
-        try {
-            let send_data = {
-                "start_latitude": src[1],
-                "end_latitude": dest[1],
-                "start_longitude": src[0],
-                "end_longitude": dest[0],
-                "elevation_type": data.elevationType,
-                "distance_limit": data.distanceLimit         
-            }
-            console.log(send_data);
-            const path = await findRoute(JSON.stringify(send_data)).catch(err => {
-                console.log("An error occurent in finding route");
-            }).finally(() => {
+        else
+        {
+            try {
+                validateLocation(false);
+                let send_data = {
+                    "start_latitude": src[1],
+                    "end_latitude": dest[1],
+                    "start_longitude": src[0],
+                    "end_longitude": dest[0],
+                    "elevation_type": data.elevationType,
+                    "distance_limit": data.distanceLimit         
+                }
+                console.log(send_data);
+                const path = await findRoute(JSON.stringify(send_data)).catch(err => {
+                    console.log("An error occurent in finding route");
+                }).finally(() => {
+                    hideLoader();
+                    console.log("finally");
+                }) //Sends the data to the controller 
+                console.log(path)
+                setThisData(path)
+            } catch(e) {
+                console.log(e);
                 hideLoader();
-                console.log("finally");
-            }) //Sends the data to the controller 
-            console.log(path)
-            setThisData(path)
-        } catch(e) {
-            console.log(e);
-            hideLoader();
-            console.log('Missing values');
-        } 
+                console.log('Missing values');
+            } 
+        }
+
     }
     const handleChange = (event) => {
         const name = event.target.name;
@@ -113,10 +124,10 @@ export default function InputView({setMyData}) {
                         type="number"
                         className = "field text-input input-values"
                         onChange={handleChange}
-                        {...register("distanceLimit", { required: true, maxLength: 10 })}
+                        {...register("distanceLimit", { required: true, maxLength: 10, min:100 })}
                     />
                 </Form.Field>
-                {errors.distanceLimit && <p className='validationText'>Enter the Max. Distance Limit</p>}
+                {errors.distanceLimit && <p className='validationText'>Enter Valid Max. Distance Limit</p>}
                 <Button type='submit' className='routeButton'>Find Route</Button>
                 <Button type='reset' className='resetButton' onClick={onReset}>Reset</Button>
                 <p className='validationText' id="locationError"></p>
