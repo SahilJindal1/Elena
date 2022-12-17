@@ -8,11 +8,11 @@ Elevation-based navigation system (EleNA)
 Install all the dependencies using python
 
 ```
-pip3 install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 ```
-python3 backend/app.py
+python backend/app.py
 ```
 
 ### To run the User Interface
