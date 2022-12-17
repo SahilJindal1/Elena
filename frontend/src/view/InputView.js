@@ -1,11 +1,10 @@
 import React from 'react';
 import { Form, Button } from 'semantic-ui-react';
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useState } from 'react';
 import "./InputView.css";
 import findRoute from "../controller/APIs"
 import {src, dest, ResetMap} from './MapboxView';
-import {ResetTableView} from './AlgorithmTableView';
 
 /**
  * This method contains the input field view and its related handling functions.
@@ -20,7 +19,7 @@ export default function InputView({setMyData}) {
 
     const hideLoader = () => loader.classList.add('loader--hide');
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, clearErrors } = useForm();
 
     const [inputs, setInputs] = useState({});
 
@@ -37,12 +36,15 @@ export default function InputView({setMyData}) {
      * @param {*} check This value is true if the locations are specified, otherwise false
      */
     const validateLocation = (check) =>{
+        console.log("inside input valid");
         const msgdisplay = document.getElementById("locationError");
-        if(check == true){
+        const formMsg = document.getElementsByClassName("validationText");
+        if(check === true){
             msgdisplay.innerHTML= "Enter a start and end location";
         }
         else{
-            msgdisplay.innerHTML= "";         
+            msgdisplay.innerHTML= "";
+            formMsg.innerHTML = "";          
         }
 
     }
@@ -93,6 +95,8 @@ export default function InputView({setMyData}) {
      * This function is called when we click on reset button.
      */
     const onReset = () => {
+        validateLocation(false);
+        clearErrors();
         setInputs({})
         setMyData(undefined)
         ResetMap();
