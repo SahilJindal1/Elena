@@ -1,6 +1,11 @@
 import React, { useRef, useEffect, useState } from 'react';
 import './AlgorithmTableView.css'
 
+/**
+ * This method contains the algorithm table view related front-end functions and the UI.
+ * @param {*} data The algorithm data we get from backend
+ * @returns A table view
+ */
 const AlgorithmTableView = ({data}) => {
     let shortestDistance = null;
     let shortestElevation = null;
@@ -8,7 +13,6 @@ const AlgorithmTableView = ({data}) => {
     let dijkstrElevation = null;
     let astarDistance = null;
     let astarElevation = null;
-    console.log("final data", data)
     if(data !== undefined) {
             shortestDistance = data['shortest_path']['distance'].toFixed(3)
             shortestElevation = data['shortest_path']['elevation_gain'].toFixed(3)
@@ -50,18 +54,13 @@ const AlgorithmTableView = ({data}) => {
     );
 }
 
+/**
+ * This function resets the table view.
+ */
 export const ResetTableView = () => {
-    // shortestDistance = '';
-    // shortestElevation = '';
-    // dijkstraDistance = '';
-    // dijkstrElevation = '';
-    // astarDistance = '';
-    // astarElevation = '';
     let data = {'shortest_path':{'distance':'', 'elevation_gain':''},
             'dijkstra':{'distance':'', 'elevation_gain':''},
             'a_star':{'distance':'', 'elevation_gain':''}};
-    console.log(data['shortest_path']['distance']);
-    //AlgorithmTableView({data});
 }
 
 export default AlgorithmTableView

@@ -20,7 +20,6 @@ class Map:
     
     @exception if the given parameters are None type
     """
-
     def generate_map(self,source,dist, mapFilePath='./Map.map'):
         
         if(mapFilePath != None):

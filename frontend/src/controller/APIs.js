@@ -1,4 +1,8 @@
-
+/**
+ * This function makes a call to the backend API.
+ * @param {*} data Contains all the values to feed to the algorithm
+ * @returns An api response containing algorithm related data
+ */
 const findRoute = async (data) => {
     console.log("Inside PostGetPath");
 

@@ -14,11 +14,14 @@ var destMarker;
 var srcMapboxGeocoder;
 var destMapboxGeocoder;
 
+/**
+ * This method contains map view related html components as well as functions which handle the map locations.
+ * @returns A view for map
+ */
 export default function MapboxView() {
 
     const mapContainer = useRef(null);
     map = useRef(null);
-    //var marker = new mapboxgl.Marker();
     const [lng, setLng] = useState(-72.50187402113794);
     const [lat, setLat] = useState(42.37314021836991);
     const [zoom, setZoom] = useState(12);
@@ -50,10 +53,8 @@ export default function MapboxView() {
     }));
 
     srcMarker = useRef(new mapboxgl.Marker({color: "#005db2"}));
-    //srcMarker.current.setLngLat([-72.5018, 42.3731]);
 
     destMarker = useRef(new mapboxgl.Marker({color: "#dc143c"}));
-    //destMarker.current.setLngLat([-72.5018, 42.3731]);
 
     useEffect(() => {
     if (map.current) return; // initialize map only once
@@ -89,7 +90,6 @@ export default function MapboxView() {
     useEffect(() => {
         if (!map.current) return;
         srcMapboxGeocoder.current.on('result', (event) => {
-            //console.log("src", event.result);
             srcMarker.current.setLngLat(event.result.geometry.coordinates).addTo(map.current);
             var bounds = new mapboxgl.LngLatBounds();
             src = event.result.geometry.coordinates;
@@ -99,7 +99,6 @@ export default function MapboxView() {
           });
 
         destMapboxGeocoder.current.on('result', (event) => {
-            //console.log("dest", event.result);
             destMarker.current.setLngLat(event.result.geometry.coordinates).addTo(map.current);
             var bounds = new mapboxgl.LngLatBounds();
             dest = event.result.geometry.coordinates;
@@ -117,14 +116,9 @@ export default function MapboxView() {
         setZoom(map.current.getZoom().toFixed(2));
     });
 
-    // map.current.on('click', (event) => {
-    //     marker.setLngLat(event.lngLat).addTo(map.current);
-    // });
-
     });
 
     return (
-        
         <div className="mapView">
             <div className="sidebar">
                 Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
@@ -135,12 +129,12 @@ export default function MapboxView() {
         );
 }
 
+/**
+ * This function displays the route to the map.
+ * @param {*} response COntains the path
+ */
 export function DisplayRoute(response) {
 
-    // if (pathJSON == null || json.stringify(pathJSON) == {}) {
-    //     //error
-    //     return ""
-    // }
     try{
         map.current.removeLayer("dijkstra-elevation-path-layer");
         map.current.removeSource("dijkstra-elevation-path");
@@ -152,7 +146,6 @@ export function DisplayRoute(response) {
     catch{
         console.log("Error handled! No layers in first search");
     }
-    console.log("here")
     map.current.addSource('dijkstra-elevation-path', {
         type: 'geojson',
         data: {
@@ -167,7 +160,6 @@ export function DisplayRoute(response) {
         }
     });
 
-    console.log("added siurce")
     map.current.addLayer({
         'id': 'dijkstra-elevation-path-layer',
         'type': 'line',
@@ -181,7 +173,6 @@ export function DisplayRoute(response) {
             'line-width': 5
         }
     });
-    console.log("added layer")
 
     map.current.addSource('astar-elevation-path', {
         type: 'geojson',
@@ -197,7 +188,6 @@ export function DisplayRoute(response) {
         }
     });
 
-    console.log("added siurce")
     map.current.addLayer({
         'id': 'astar-elevation-path-layer',
         'type': 'line',
@@ -226,7 +216,6 @@ export function DisplayRoute(response) {
         }
     });
 
-    console.log("added siurce")
     map.current.addLayer({
         'id': 'shortest-path-layer',
         'type': 'line',
@@ -242,9 +231,10 @@ export function DisplayRoute(response) {
     });
 }
 
-
+/**
+ * This function resets the map.
+ */
 export function ResetMap() {
-    console.log("resetting map");
     try{
         srcMapboxGeocoder.current.clear();
         srcMarker.current.remove();

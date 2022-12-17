@@ -5,6 +5,11 @@ import AlgorithmTableView from './view/AlgorithmTableView.js';
 import "./App.css";
 import {DisplayRoute} from './view/MapboxView.js';
 
+/**
+ * This method renders the App view which in turn consists of 3 other views - InputView,
+ * MapboxView, and AlgorithmTableView.
+ * @returns All components within our application
+ */
 export default function App() {
   
   
@@ -18,7 +23,6 @@ export default function App() {
   }
 
     return (
-        
         <div className="main">
             <MapboxView className='mapView'/>
             <div className='sideView'>

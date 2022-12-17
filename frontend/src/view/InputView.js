@@ -7,6 +7,11 @@ import findRoute from "../controller/APIs"
 import {src, dest, ResetMap} from './MapboxView';
 import {ResetTableView} from './AlgorithmTableView';
 
+/**
+ * This method contains the input field view and its related handling functions.
+ * @param {*} setMyData A method defined in App.js which sets the user-given input data to tableValues.
+ * @returns A view displaying the input fields and buttons.
+ */
 export default function InputView({setMyData}) {
     const loader = document.querySelector('.loader');
 
@@ -18,9 +23,19 @@ export default function InputView({setMyData}) {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const [inputs, setInputs] = useState({});
+
+    /**
+     * This functions calls the setMyData method which sets the tableValues field in App.js.
+     * @param {*} path Input values
+     */
     const setThisData = (path) => {
         setMyData(path)
     }
+
+    /**
+     * This function displays a message if the start and end location are not specified.
+     * @param {*} check This value is true if the locations are specified, otherwise false
+     */
     const validateLocation = (check) =>{
         const msgdisplay = document.getElementById("locationError");
         if(check == true){
@@ -31,13 +46,14 @@ export default function InputView({setMyData}) {
         }
 
     }
+
+    /**
+     * This function is called on submitting the find route button.
+     * @param {*} data The input values given by user
+     */
     const onSubmit = async(data)=> {
         showLoader();
-        console.log(data);
-        console.log("src");
-        console.log(src, dest);
         if(src==null || dest==null){
-            console.log("In the errorr ")
             hideLoader();
             validateLocation(true);
         }
@@ -53,14 +69,11 @@ export default function InputView({setMyData}) {
                     "elevation_type": data.elevationType,
                     "distance_limit": data.distanceLimit         
                 }
-                console.log(send_data);
                 const path = await findRoute(JSON.stringify(send_data)).catch(err => {
                     console.log("An error occurent in finding route");
                 }).finally(() => {
                     hideLoader();
-                    console.log("finally");
                 }) //Sends the data to the controller 
-                console.log(path)
                 setThisData(path)
             } catch(e) {
                 console.log(e);
@@ -76,12 +89,13 @@ export default function InputView({setMyData}) {
         setInputs(values => ({...values, [name]: value}))
     }
 
+    /**
+     * This function is called when we click on reset button.
+     */
     const onReset = () => {
-        console.log("resetting");
         setInputs({})
         setMyData(undefined)
         ResetMap();
-        console.log("Here's the inputs",inputs)
     }
 
     return (
