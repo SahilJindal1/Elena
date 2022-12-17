@@ -15,19 +15,22 @@ export default function InputView({setMyData}) {
 
     const hideLoader = () => loader.classList.add('loader--hide');
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, clearErrors } = useForm();
 
     const [inputs, setInputs] = useState({});
     const setThisData = (path) => {
         setMyData(path)
     }
     const validateLocation = (check) =>{
+        console.log("inside input valid");
         const msgdisplay = document.getElementById("locationError");
+        const formMsg = document.getElementsByClassName("validationText");
         if(check == true){
             msgdisplay.innerHTML= "Enter a start and end location";
         }
         else{
-            msgdisplay.innerHTML= "";         
+            msgdisplay.innerHTML= "";
+            formMsg.innerHTML = "";          
         }
 
     }
@@ -77,11 +80,13 @@ export default function InputView({setMyData}) {
     }
 
     const onReset = () => {
-        console.log("resetting");
+        validateLocation(false);
+        clearErrors();
         setInputs({})
         setMyData(undefined)
         ResetMap();
         console.log("Here's the inputs",inputs)
+
     }
 
     return (
