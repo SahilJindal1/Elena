@@ -1,11 +1,10 @@
 import React from 'react';
 import { Form, Button } from 'semantic-ui-react';
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useState } from 'react';
 import "./InputView.css";
 import findRoute from "../controller/APIs"
 import {src, dest, ResetMap} from './MapboxView';
-import {ResetTableView} from './AlgorithmTableView';
 
 export default function InputView({setMyData}) {
     const loader = document.querySelector('.loader');
@@ -25,7 +24,7 @@ export default function InputView({setMyData}) {
         console.log("inside input valid");
         const msgdisplay = document.getElementById("locationError");
         const formMsg = document.getElementsByClassName("validationText");
-        if(check == true){
+        if(check === true){
             msgdisplay.innerHTML= "Enter a start and end location";
         }
         else{
