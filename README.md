@@ -1,6 +1,16 @@
 # Elena
 Elevation-based navigation system (EleNA) 
 
+## Requirements
+
+python3 
+
+node == v14.16.0 
+
+npm == 6.14.11 
+
+installed on your machine
+
 ## How to Run
 
 ### To run the backend server
