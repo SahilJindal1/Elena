@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React from 'react';
 import './AlgorithmTableView.css'
 
 const AlgorithmTableView = ({data}) => {
@@ -24,8 +24,8 @@ const AlgorithmTableView = ({data}) => {
                 <thead>
                     <tr>
                         <th>Algorithm</th>
-                        <th>Distance</th>
-                        <th>Elevation Gain</th>
+                        <th>Distance (in m)</th>
+                        <th>Elevation Gain (in m)</th>
                     </tr>
                 </thead>
                 <tbody>

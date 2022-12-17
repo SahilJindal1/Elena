@@ -107,6 +107,38 @@ export default function MapboxView() {
             bounds.extend(destMarker.current.getLngLat());
             map.current.fitBounds(bounds, {padding: 100});
         });
+
+        srcMapboxGeocoder.current.on('clear', () => {
+            try{
+                src = null;
+                srcMarker.current.remove();
+                map.current.removeLayer("dijkstra-elevation-path-layer");
+                map.current.removeSource("dijkstra-elevation-path");
+                map.current.removeLayer("astar-elevation-path-layer");
+                map.current.removeSource("astar-elevation-path");
+                map.current.removeLayer("shortest-path-layer");
+                map.current.removeSource("shortest-path");
+            }
+            catch(e) {
+                console.log("Error handled! Layer is not added yet :)")
+            }
+        });
+
+        destMapboxGeocoder.current.on('clear', () => {
+            try{
+                dest = null;
+                destMarker.current.remove();
+                map.current.removeLayer("dijkstra-elevation-path-layer");
+                map.current.removeSource("dijkstra-elevation-path");
+                map.current.removeLayer("astar-elevation-path-layer");
+                map.current.removeSource("astar-elevation-path");
+                map.current.removeLayer("shortest-path-layer");
+                map.current.removeSource("shortest-path");
+            }
+            catch(e) {
+                console.log("Error handled! Layer is not added yet :)")
+            }
+        });
     })
 
     useEffect(() => {
@@ -246,6 +278,8 @@ export function DisplayRoute(response) {
 export function ResetMap() {
     console.log("resetting map");
     try{
+        src = null;
+        dest = null;
         srcMapboxGeocoder.current.clear();
         srcMarker.current.remove();
         destMapboxGeocoder.current.clear();
